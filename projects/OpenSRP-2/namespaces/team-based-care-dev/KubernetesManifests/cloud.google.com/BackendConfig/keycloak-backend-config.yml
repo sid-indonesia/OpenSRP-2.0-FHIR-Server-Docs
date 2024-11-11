@@ -1,0 +1,14 @@
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"cloud.google.com/v1","kind":"BackendConfig","metadata":{"annotations":{},"name":"keycloak-backend-config","namespace":"team-based-care-dev"},"spec":{"timeoutSec":300}}
+  creationTimestamp: "2024-02-23T06:22:24Z"
+  generation: 1
+  name: keycloak-backend-config
+  namespace: team-based-care-dev
+  resourceVersion: "175265414"
+  uid: 229a40b3-36d3-4ce3-aba9-d13372b8f98f
+spec:
+  timeoutSec: 300

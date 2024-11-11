@@ -1,0 +1,15 @@
+apiVersion: networking.gke.io/v1beta1
+kind: FrontendConfig
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.gke.io/v1beta1","kind":"FrontendConfig","metadata":{"annotations":{},"creationTimestamp":"2023-09-30T16:35:47Z","generation":1,"managedFields":[{"apiVersion":"networking.gke.io/v1beta1","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:kubectl.kubernetes.io/last-applied-configuration":{}}},"f:spec":{".":{},"f:redirectToHttps":{".":{},"f:enabled":{}}}},"manager":"kubectl-client-side-apply","operation":"Update","time":"2023-09-30T16:35:47Z"}],"name":"http-to-https-redirect","namespace":"team-based-care-dev","resourceVersion":"23210764","uid":"af35dadb-39bc-4956-b942-4a9170307ae4"},"spec":{"redirectToHttps":{"enabled":true}}}
+  creationTimestamp: "2023-12-07T07:45:44Z"
+  generation: 1
+  name: http-to-https-redirect
+  namespace: team-based-care-dev
+  resourceVersion: "92071312"
+  uid: c25baec2-b26c-4b4b-bd83-9e131e5f616d
+spec:
+  redirectToHttps:
+    enabled: true

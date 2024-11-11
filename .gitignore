@@ -1,3 +1,10 @@
+secrets
+Secret
+secrets.*
+*.secrets.*
+config.php
+
+
 # Logs
 logs
 *.log

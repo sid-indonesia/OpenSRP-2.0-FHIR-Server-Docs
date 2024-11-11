@@ -1,0 +1,177 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    autopilot.gke.io/resource-adjustment: '{"input":{"containers":[{"limits":{"ephemeral-storage":"1Gi"},"requests":{"cpu":"50m","ephemeral-storage":"1Gi","memory":"500Mi"},"name":"web-1"}]},"output":{"containers":[{"limits":{"ephemeral-storage":"1Gi"},"requests":{"cpu":"76m","ephemeral-storage":"1Gi","memory":"500Mi"},"name":"web-1"}]},"modified":true}'
+    autopilot.gke.io/warden-version: 2.9.48
+    deployment.kubernetes.io/revision: "7"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"autopilot.gke.io/resource-adjustment":"{\"input\":{\"containers\":[{\"limits\":{\"ephemeral-storage\":\"1Gi\"},\"requests\":{\"cpu\":\"50m\",\"ephemeral-storage\":\"1Gi\",\"memory\":\"500Mi\"},\"name\":\"web-1\"}]},\"output\":{\"containers\":[{\"limits\":{\"ephemeral-storage\":\"1Gi\"},\"requests\":{\"cpu\":\"76m\",\"ephemeral-storage\":\"1Gi\",\"memory\":\"500Mi\"},\"name\":\"web-1\"}]},\"modified\":true}","autopilot.gke.io/warden-version":"2.9.48","deployment.kubernetes.io/revision":"6"},"creationTimestamp":"2023-12-08T02:42:16Z","generation":206,"labels":{"app":"fhir-web"},"name":"fhir-web","namespace":"team-based-care-dev","resourceVersion":"371478824","uid":"916561dd-0ca3-436c-b237-6f7af4d2ec9f"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app":"fhir-web"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"fhir-web"}},"spec":{"containers":[{"env":[{"name":"CHANGE_THIS_TO_TRIGGER_ROLLING_UPDATE","value":"3"},{"name":"EXPRESS_CONTENT_SECURITY_POLICY_CONFIG","valueFrom":{"configMapKeyRef":{"key":"EXPRESS_CONTENT_SECURITY_POLICY_CONFIG","name":"fhir-web-config-uct8"}}},{"name":"EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL","valueFrom":{"configMapKeyRef":{"key":"EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL","name":"fhir-web-config-uct8"}}},{"name":"EXPRESS_KEYCLOAK_LOGOUT_URL","valueFrom":{"configMapKeyRef":{"key":"EXPRESS_KEYCLOAK_LOGOUT_URL","name":"fhir-web-config-uct8"}}},{"name":"EXPRESS_OAUTH_GET_STATE_URL","valueFrom":{"configMapKeyRef":{"key":"EXPRESS_OAUTH_GET_STATE_URL","name":"fhir-web-config-uct8"}}},{"name":"EXPRESS_OPENSRP_ACCESS_TOKEN_URL","valueFrom":{"configMapKeyRef":{"key":"EXPRESS_OPENSRP_ACCESS_TOKEN_URL","name":"fhir-web-config-uct8"}}},{"name":"EXPRESS_OPENSRP_AUTHORIZATION_URL","valueFrom":{"configMapKeyRef":{"key":"EXPRESS_OPENSRP_AUTHORIZATION_URL","name":"fhir-web-config-uct8"}}},{"name":"EXPRESS_OPENSRP_CALLBACK_URL","valueFrom":{"configMapKeyRef":{"key":"EXPRESS_OPENSRP_CALLBACK_URL","name":"fhir-web-config-uct8"}}},{"name":"EXPRESS_OPENSRP_CLIENT_ID","valueFrom":{"configMapKeyRef":{"key":"KEYCLOAK_IMPORT_CLIENT_ID_FHIR_WEB","name":"keycloak-config-nkks"}}},{"name":"EXPRESS_OPENSRP_CLIENT_SECRET","valueFrom":{"secretKeyRef":{"key":"KEYCLOAK_IMPORT_CLIENT_SECRET_FHIR_WEB","name":"keycloak-secrets"}}},{"name":"EXPRESS_OPENSRP_USER_URL","valueFrom":{"configMapKeyRef":{"key":"EXPRESS_OPENSRP_USER_URL","name":"fhir-web-config-uct8"}}},{"name":"EXPRESS_SERVER_LOGOUT_URL","valueFrom":{"configMapKeyRef":{"key":"EXPRESS_SERVER_LOGOUT_URL","name":"fhir-web-config-uct8"}}},{"name":"EXPRESS_SESSION_SECRET","valueFrom":{"secretKeyRef":{"key":"EXPRESS_SESSION_SECRET","name":"fhir-web-secrets"}}}],"image":"opensrp/web:v3.2.1","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":4,"httpGet":{"path":"/","port":"http","scheme":"HTTP"},"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"name":"web-1","ports":[{"containerPort":3000,"name":"http","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/","port":"http","scheme":"HTTP"},"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"resources":{"limits":{"ephemeral-storage":"1Gi"},"requests":{"cpu":"76m","ephemeral-storage":"1Gi","memory":"500Mi"}},"securityContext":{"capabilities":{"drop":["NET_RAW"]}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/etc/confd/templates/config.js.tmpl","name":"opensrp-server-config-properties","subPath":"config.js.tpl"}]}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{"seccompProfile":{"type":"RuntimeDefault"}},"terminationGracePeriodSeconds":30,"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"amd64"}],"volumes":[{"configMap":{"defaultMode":420,"name":"fhir-web-opensrp-web"},"name":"opensrp-server-config-properties"}]}}},"status":{"availableReplicas":1,"conditions":[{"lastTransitionTime":"2023-12-08T02:42:16Z","lastUpdateTime":"2024-06-24T04:07:57Z","message":"ReplicaSet \"fhir-web-5b5fc96975\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"},{"lastTransitionTime":"2024-08-03T20:38:41Z","lastUpdateTime":"2024-08-03T20:38:41Z","message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"}],"observedGeneration":206,"readyReplicas":1,"replicas":1,"updatedReplicas":1}}
+  creationTimestamp: "2023-12-08T02:42:16Z"
+  generation: 207
+  labels:
+    app: fhir-web
+  name: fhir-web
+  namespace: team-based-care-dev
+  resourceVersion: "484407116"
+  uid: 916561dd-0ca3-436c-b237-6f7af4d2ec9f
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: fhir-web
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: fhir-web
+    spec:
+      containers:
+      - env:
+        - name: CHANGE_THIS_TO_TRIGGER_ROLLING_UPDATE
+          value: "3"
+        - name: EXPRESS_CONTENT_SECURITY_POLICY_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              key: EXPRESS_CONTENT_SECURITY_POLICY_CONFIG
+              name: fhir-web-config-uct8
+        - name: EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL
+          valueFrom:
+            configMapKeyRef:
+              key: EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL
+              name: fhir-web-config-uct8
+        - name: EXPRESS_KEYCLOAK_LOGOUT_URL
+          valueFrom:
+            configMapKeyRef:
+              key: EXPRESS_KEYCLOAK_LOGOUT_URL
+              name: fhir-web-config-uct8
+        - name: EXPRESS_OAUTH_GET_STATE_URL
+          valueFrom:
+            configMapKeyRef:
+              key: EXPRESS_OAUTH_GET_STATE_URL
+              name: fhir-web-config-uct8
+        - name: EXPRESS_OPENSRP_ACCESS_TOKEN_URL
+          valueFrom:
+            configMapKeyRef:
+              key: EXPRESS_OPENSRP_ACCESS_TOKEN_URL
+              name: fhir-web-config-uct8
+        - name: EXPRESS_OPENSRP_AUTHORIZATION_URL
+          valueFrom:
+            configMapKeyRef:
+              key: EXPRESS_OPENSRP_AUTHORIZATION_URL
+              name: fhir-web-config-uct8
+        - name: EXPRESS_OPENSRP_CALLBACK_URL
+          valueFrom:
+            configMapKeyRef:
+              key: EXPRESS_OPENSRP_CALLBACK_URL
+              name: fhir-web-config-uct8
+        - name: EXPRESS_OPENSRP_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              key: KEYCLOAK_IMPORT_CLIENT_ID_FHIR_WEB
+              name: keycloak-config-nkks
+        - name: EXPRESS_OPENSRP_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: KEYCLOAK_IMPORT_CLIENT_SECRET_FHIR_WEB
+              name: keycloak-secrets
+        - name: EXPRESS_OPENSRP_USER_URL
+          valueFrom:
+            configMapKeyRef:
+              key: EXPRESS_OPENSRP_USER_URL
+              name: fhir-web-config-uct8
+        - name: EXPRESS_SERVER_LOGOUT_URL
+          valueFrom:
+            configMapKeyRef:
+              key: EXPRESS_SERVER_LOGOUT_URL
+              name: fhir-web-config-uct8
+        - name: EXPRESS_SESSION_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: EXPRESS_SESSION_SECRET
+              name: fhir-web-secrets
+        image: opensrp/web:v3.2.1
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 4
+          httpGet:
+            path: /
+            port: http
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: web-1
+        ports:
+        - containerPort: 3000
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: http
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            ephemeral-storage: 1Gi
+          requests:
+            cpu: 76m
+            ephemeral-storage: 1Gi
+            memory: 500Mi
+        securityContext:
+          capabilities:
+            drop:
+            - NET_RAW
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/confd/templates/config.js.tmpl
+          name: opensrp-server-config-properties
+          subPath: config.js.tpl
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        key: kubernetes.io/arch
+        operator: Equal
+        value: amd64
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: fhir-web-opensrp-web
+        name: opensrp-server-config-properties
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2023-12-08T02:42:16Z"
+    lastUpdateTime: "2024-08-26T06:45:55Z"
+    message: ReplicaSet "fhir-web-7ccb7545" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2024-11-02T17:31:08Z"
+    lastUpdateTime: "2024-11-02T17:31:08Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  observedGeneration: 207
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

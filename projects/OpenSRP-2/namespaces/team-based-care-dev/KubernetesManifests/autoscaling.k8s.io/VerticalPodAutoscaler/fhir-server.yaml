@@ -1,0 +1,48 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"autoscaling.k8s.io/v1","kind":"VerticalPodAutoscaler","metadata":{"annotations":{},"name":"fhir-server","namespace":"team-based-care-dev"},"spec":{"resourcePolicy":{"containerPolicies":[{"containerName":"*","controlledResources":["memory"],"maxAllowed":{"memory":"4096Mi"},"minAllowed":{"memory":"3Gi"},"mode":"Auto"}]},"targetRef":{"apiVersion":"apps/v1","kind":"Deployment","name":"fhir-server"},"updatePolicy":{"updateMode":"Auto"}},"status":{"conditions":[{"lastTransitionTime":"2023-12-07T08:15:17Z","status":"False","type":"LowConfidence"},{"lastTransitionTime":"2023-12-07T07:49:17Z","status":"True","type":"RecommendationProvided"}],"recommendation":{"containerRecommendations":[{"containerName":"hapi-fhir-jpaserver-starter-1","lowerBound":{"memory":"2Gi"},"target":{"memory":"2Gi"},"uncappedTarget":{"memory":"1109393408"},"upperBound":{"memory":"4Gi"}}]}}}
+  creationTimestamp: "2023-12-08T02:42:18Z"
+  generation: 23749
+  name: fhir-server
+  namespace: team-based-care-dev
+  resourceVersion: "491157138"
+  uid: 38cebd7f-84f0-4e7d-a336-40cba661555b
+spec:
+  resourcePolicy:
+    containerPolicies:
+    - containerName: '*'
+      controlledResources:
+      - memory
+      maxAllowed:
+        memory: 4096Mi
+      minAllowed:
+        memory: 3Gi
+      mode: Auto
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: fhir-server
+  updatePolicy:
+    updateMode: Auto
+status:
+  conditions:
+  - lastTransitionTime: "2024-06-03T00:11:36Z"
+    status: "False"
+    type: LowConfidence
+  - lastTransitionTime: "2024-06-03T00:02:36Z"
+    status: "True"
+    type: RecommendationProvided
+  recommendation:
+    containerRecommendations:
+    - containerName: hapi-fhir-jpaserver-starter-1
+      lowerBound:
+        memory: 3Gi
+      target:
+        memory: "3327131648"
+      uncappedTarget:
+        memory: "3327131648"
+      upperBound:
+        memory: "3365928960"

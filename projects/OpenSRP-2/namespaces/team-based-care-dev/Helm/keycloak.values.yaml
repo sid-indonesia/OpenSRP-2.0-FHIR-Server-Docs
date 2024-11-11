@@ -1,0 +1,174 @@
+USER-SUPPLIED VALUES: null
+command:
+  - /opt/keycloak/bin/kc.sh
+  - --verbose
+  - start
+  - --http-enabled=true
+  - --http-port=8080
+  - --hostname-strict=false
+  - --hostname-strict-https=false
+  - --spi-events-listener-jboss-logging-success-level=info
+  - --spi-events-listener-jboss-logging-error-level=warn
+  - --import-realm
+database:
+  database: keycloak_gke
+  existingSecret: keycloak-secrets
+  existingSecretKey: DB_PASSWORD
+  hostname: postgresql-dev.ancillary-services
+  port: 5432
+  username: keycloak_gke
+  vendor: postgres
+extraEnv: |
+  - name: KEYCLOAK_ADMIN
+    value: admin
+  - name: KEYCLOAK_ADMIN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-secrets
+        key: KEYCLOAK_PASSWORD
+  - name: KEYCLOAK_IMPORT
+    valueFrom:
+      configMapKeyRef:
+        key: KEYCLOAK_IMPORT
+        name: keycloak-config-nkks
+  - name: KEYCLOAK_IMPORT_CLIENT_ID_OPENSRP_V2
+    valueFrom:
+      configMapKeyRef:
+        key: KEYCLOAK_IMPORT_CLIENT_ID_OPENSRP_V2
+        name: keycloak-config-nkks
+  - name: KEYCLOAK_IMPORT_CLIENT_SECRET_OPENSRP_V2
+    valueFrom:
+      secretKeyRef:
+        key: KEYCLOAK_IMPORT_CLIENT_SECRET_OPENSRP_V2
+        name: keycloak-secrets
+  - name: KEYCLOAK_IMPORT_CLIENT_ID_BIDAN
+    valueFrom:
+      configMapKeyRef:
+        key: KEYCLOAK_IMPORT_CLIENT_ID_BIDAN
+        name: keycloak-config-nkks
+  - name: KEYCLOAK_IMPORT_CLIENT_SECRET_BIDAN
+    valueFrom:
+      secretKeyRef:
+        key: KEYCLOAK_IMPORT_CLIENT_SECRET_BIDAN
+        name: keycloak-secrets
+  - name: KEYCLOAK_IMPORT_CLIENT_ID_CADRE
+    valueFrom:
+      configMapKeyRef:
+        key: KEYCLOAK_IMPORT_CLIENT_ID_CADRE
+        name: keycloak-config-nkks
+  - name: KEYCLOAK_IMPORT_CLIENT_SECRET_CADRE
+    valueFrom:
+      secretKeyRef:
+        key: KEYCLOAK_IMPORT_CLIENT_SECRET_CADRE
+        name: keycloak-secrets
+  - name: KEYCLOAK_IMPORT_CLIENT_ID_VACCINATOR
+    valueFrom:
+      configMapKeyRef:
+        key: KEYCLOAK_IMPORT_CLIENT_ID_VACCINATOR
+        name: keycloak-config-nkks
+  - name: KEYCLOAK_IMPORT_CLIENT_SECRET_VACCINATOR
+    valueFrom:
+      secretKeyRef:
+        key: KEYCLOAK_IMPORT_CLIENT_SECRET_VACCINATOR
+        name: keycloak-secrets
+  - name: KEYCLOAK_IMPORT_CLIENT_ID_FHIR_WEB
+    valueFrom:
+      configMapKeyRef:
+        key: KEYCLOAK_IMPORT_CLIENT_ID_FHIR_WEB
+        name: keycloak-config-nkks
+  - name: KEYCLOAK_IMPORT_CLIENT_SECRET_FHIR_WEB
+    valueFrom:
+      secretKeyRef:
+        key: KEYCLOAK_IMPORT_CLIENT_SECRET_FHIR_WEB
+        name: keycloak-secrets
+  - name: KEYCLOAK_IMPORT_CLIENT_REDIRECT_URI_FHIR_WEB
+    valueFrom:
+      configMapKeyRef:
+        key: KEYCLOAK_IMPORT_CLIENT_REDIRECT_URI_FHIR_WEB
+        name: keycloak-config-nkks
+  - name: KEYCLOAK_IMPORT_CLIENT_WEB_ORIGIN_FHIR_WEB
+    valueFrom:
+      configMapKeyRef:
+        key: KEYCLOAK_IMPORT_CLIENT_WEB_ORIGIN_FHIR_WEB
+        name: keycloak-config-nkks
+  - name: KEYCLOAK_IMPORT_CLIENT_ID_FHIR_SERVER_AUTH
+    valueFrom:
+      configMapKeyRef:
+        key: KEYCLOAK_IMPORT_CLIENT_ID_FHIR_SERVER_AUTH
+        name: keycloak-config-nkks
+  - name: KEYCLOAK_IMPORT_CLIENT_SECRET_FHIR_SERVER_AUTH
+    valueFrom:
+      secretKeyRef:
+        key: KEYCLOAK_IMPORT_CLIENT_SECRET_FHIR_SERVER_AUTH
+        name: keycloak-secrets
+  - name: KEYCLOAK_IMPORT_CLIENT_ID_OPENFN
+    valueFrom:
+      configMapKeyRef:
+        key: KEYCLOAK_IMPORT_CLIENT_ID_OPENFN
+        name: keycloak-config-nkks
+  - name: KEYCLOAK_IMPORT_CLIENT_SECRET_OPENFN
+    valueFrom:
+      secretKeyRef:
+        key: KEYCLOAK_IMPORT_CLIENT_SECRET_OPENFN
+        name: keycloak-secrets
+  - name: JAVA_OPTS_APPEND
+    value: >-
+      -XX:+UseContainerSupport
+      -XX:MaxRAMPercentage=50.0
+      -Djava.awt.headless=true
+      -Djgroups.dns.query={{ include "keycloak.fullname" . }}-headless
+extraVolumes: |
+  - name: keycloak-volume
+    configMap:
+      name: keycloak-realm-json
+# Add additional volumes mounts, e. g. for custom themes
+extraVolumeMounts: |
+  - mountPath: /opt/keycloak/data/import
+    name: keycloak-volume
+
+health:
+  enabled: true
+http:
+  relativePath: /auth
+  # internalPort: http-internal
+image:
+  digest: ""
+  pullPolicy: IfNotPresent
+  repository: quay.io/keycloak/keycloak
+  tag: 24.0.2
+  # tag: "25.0.0"
+ingress:
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: sso-dev
+    networking.gke.io/managed-certificates: trainee01.sso.dev.sid-indonesia.org-tls
+    networking.gke.io/v1beta1.FrontendConfig: http-to-https-redirect
+  console:
+    annotations: {}
+    enabled: false
+    ingressClassName: ""
+    rules:
+      - host: "{{ .Release.Name }}.keycloak.example.com"
+        paths:
+          - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/admin'
+            pathType: Prefix
+    tls: []
+  enabled: true
+  labels: {}
+  rules:
+    - host: trainee01.sso.dev.sid-indonesia.org-tls
+      paths:
+        - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/'
+          pathType: Prefix
+  servicePort: http
+  tls: []
+metrics:
+  enabled: true
+replicas: 1
+resources:
+  limits:
+    memory: 2048Mi
+  requests:
+    cpu: 500m
+    memory: 1024Mi
+serviceMonitor:
+  enabled: false

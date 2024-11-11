@@ -1,0 +1,14 @@
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"cloud.google.com/v1","kind":"BackendConfig","metadata":{"annotations":{},"name":"fhir-web-backend-config","namespace":"team-based-care-dev"},"spec":{"timeoutSec":300}}
+  creationTimestamp: "2024-02-23T06:24:38Z"
+  generation: 1
+  name: fhir-web-backend-config
+  namespace: team-based-care-dev
+  resourceVersion: "175267053"
+  uid: 4f1a40c9-9d3b-44bf-a48b-508b69ca5246
+spec:
+  timeoutSec: 300

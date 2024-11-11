@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":true}'
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"postgresql-dev","namespace":"ancillary-services"},"spec":{"clusterIP":"None","ports":[{"port":80,"protocol":"TCP","targetPort":5432}]}}
+  creationTimestamp: "2023-11-08T17:58:58Z"
+  name: postgresql-dev
+  namespace: ancillary-services
+  resourceVersion: "62933637"
+  uid: b42b3578-70e6-49f8-8017-87825721a4b2
+spec:
+  clusterIP: None
+  clusterIPs:
+  - None
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  - IPv6
+  ipFamilyPolicy: RequireDualStack
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 5432
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

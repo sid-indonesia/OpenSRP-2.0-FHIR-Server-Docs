@@ -1,0 +1,33 @@
+apiVersion: v1
+data:
+  DB_ADDR: postgresql-dev.ancillary-services
+  DB_DATABASE: keycloak_gke
+  DB_PORT: "5432"
+  DB_SCHEMA: public
+  DB_USER: keycloak_gke
+  DB_VENDOR: postgres
+  KEYCLOAK_IMPORT: /import/realm.json
+  KEYCLOAK_IMPORT_CLIENT_ID_BIDAN: bidan-app-client
+  KEYCLOAK_IMPORT_CLIENT_ID_CADRE: cadre-app-client
+  KEYCLOAK_IMPORT_CLIENT_ID_FHIR_SERVER_AUTH: fhir-server-with-auth-client
+  KEYCLOAK_IMPORT_CLIENT_ID_FHIR_WEB: fhir-web-client
+  KEYCLOAK_IMPORT_CLIENT_ID_OPENFN: OpenFn-client
+  KEYCLOAK_IMPORT_CLIENT_ID_OPENSRP_V2: opensrp-v2-app-client
+  KEYCLOAK_IMPORT_CLIENT_ID_VACCINATOR: vaccinator-app-client
+  KEYCLOAK_IMPORT_CLIENT_REDIRECT_URI_FHIR_WEB: https://trainee01.fhir-web.dev.sid-indonesia.org/*
+  KEYCLOAK_IMPORT_CLIENT_WEB_ORIGIN_FHIR_WEB: https://trainee01.fhir-web.dev.sid-indonesia.org
+  KEYCLOAK_STATISTICS: all
+  KEYCLOAK_USER: admin
+  PROXY_ADDRESS_FORWARDING: "true"
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"DB_ADDR":"postgresql-dev.ancillary-services","DB_DATABASE":"keycloak_gke","DB_PORT":"5432","DB_SCHEMA":"public","DB_USER":"keycloak_gke","DB_VENDOR":"postgres","KEYCLOAK_IMPORT":"/import/realm.json","KEYCLOAK_IMPORT_CLIENT_ID_BIDAN":"bidan-app-client","KEYCLOAK_IMPORT_CLIENT_ID_CADRE":"cadre-app-client","KEYCLOAK_IMPORT_CLIENT_ID_FHIR_SERVER_AUTH":"fhir-server-with-auth-client","KEYCLOAK_IMPORT_CLIENT_ID_FHIR_WEB":"fhir-web-client","KEYCLOAK_IMPORT_CLIENT_ID_OPENFN":"OpenFn-client","KEYCLOAK_IMPORT_CLIENT_ID_OPENSRP_V2":"opensrp-v2-app-client","KEYCLOAK_IMPORT_CLIENT_ID_VACCINATOR":"vaccinator-app-client","KEYCLOAK_IMPORT_CLIENT_REDIRECT_URI_FHIR_WEB":"https://trainee01.fhir-web.dev.sid-indonesia.org/*","KEYCLOAK_IMPORT_CLIENT_WEB_ORIGIN_FHIR_WEB":"https://trainee01.fhir-web.dev.sid-indonesia.org","KEYCLOAK_STATISTICS":"all","KEYCLOAK_USER":"admin","PROXY_ADDRESS_FORWARDING":"true"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app":"keycloak"},"name":"keycloak-config-nkks","namespace":"team-based-care-dev"}}
+  creationTimestamp: "2023-12-08T02:42:14Z"
+  labels:
+    app: keycloak
+  name: keycloak-config-nkks
+  namespace: team-based-care-dev
+  resourceVersion: "92885223"
+  uid: 147f1791-0a4a-4d71-9910-2baf7c5a0551

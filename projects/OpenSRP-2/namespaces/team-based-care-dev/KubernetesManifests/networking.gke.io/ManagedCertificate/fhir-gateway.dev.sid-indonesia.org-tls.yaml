@@ -1,0 +1,22 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.gke.io/v1","kind":"ManagedCertificate","metadata":{"annotations":{},"creationTimestamp":"2023-09-26T03:28:33Z","generation":12,"managedFields":[{"apiVersion":"networking.gke.io/v1beta1","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{".":{},"f:domains":{}}},"manager":"GoogleCloudConsole","operation":"Update","time":"2023-09-26T03:28:33Z"},{"apiVersion":"networking.gke.io/v1","fieldsType":"FieldsV1","fieldsV1":{"f:status":{".":{},"f:certificateName":{},"f:certificateStatus":{},"f:domainStatus":{},"f:expireTime":{}}},"manager":"managed-certificate-controller","operation":"Update","time":"2023-09-27T02:56:14Z"}],"name":"fhir-gateway.dev.sid-indonesia.org-tls","namespace":"team-based-care-dev","resourceVersion":"19570872","uid":"de7de6b3-5028-4faf-b580-f53e5faa8405"},"spec":{"domains":["trainee01.fhir-gateway.dev.sid-indonesia.org"]},"status":{"certificateName":"mcrt-24eb594c-1138-46dd-bf05-046f48d15d80","certificateStatus":"Active","domainStatus":[{"domain":"trainee01.fhir-gateway.dev.sid-indonesia.org","status":"Active"}],"expireTime":"2023-12-25T18:45:24.000-08:00"}}
+  creationTimestamp: "2023-12-07T07:45:44Z"
+  generation: 9
+  name: fhir-gateway.dev.sid-indonesia.org-tls
+  namespace: team-based-care-dev
+  resourceVersion: "432245495"
+  uid: c4da24d5-9c9c-434e-8927-48dba39de0b3
+spec:
+  domains:
+  - trainee01.fhir-gateway.dev.sid-indonesia.org
+status:
+  certificateName: mcrt-537b8eb3-baf0-49fe-9a23-36d1894896f5
+  certificateStatus: Active
+  domainStatus:
+  - domain: trainee01.fhir-gateway.dev.sid-indonesia.org
+    status: Active
+  expireTime: "2024-12-20T14:19:17.000-08:00"

@@ -1,0 +1,48 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"autoscaling.k8s.io/v1","kind":"VerticalPodAutoscaler","metadata":{"annotations":{},"name":"fhir-server-auth","namespace":"team-based-care-dev"},"spec":{"resourcePolicy":{"containerPolicies":[{"containerName":"*","controlledResources":["memory"],"maxAllowed":{"memory":"4096Mi"},"minAllowed":{"memory":"3Gi"},"mode":"Auto"}]},"targetRef":{"apiVersion":"apps/v1","kind":"Deployment","name":"fhir-server-auth"},"updatePolicy":{"updateMode":"Auto"}},"status":{"conditions":[{"lastTransitionTime":"2023-12-07T08:14:17Z","status":"False","type":"LowConfidence"},{"lastTransitionTime":"2023-12-07T07:50:17Z","status":"True","type":"RecommendationProvided"}],"recommendation":{"containerRecommendations":[{"containerName":"hapi-fhir-jpaserver-starter-1","lowerBound":{"memory":"2Gi"},"target":{"memory":"2Gi"},"uncappedTarget":{"memory":"1159725056"},"upperBound":{"memory":"4Gi"}}]}}}
+  creationTimestamp: "2023-12-08T02:42:18Z"
+  generation: 20771
+  name: fhir-server-auth
+  namespace: team-based-care-dev
+  resourceVersion: "491153606"
+  uid: d86c38a0-69a9-4a45-915d-df7352b63db8
+spec:
+  resourcePolicy:
+    containerPolicies:
+    - containerName: '*'
+      controlledResources:
+      - memory
+      maxAllowed:
+        memory: 4096Mi
+      minAllowed:
+        memory: 3Gi
+      mode: Auto
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: fhir-server-auth
+  updatePolicy:
+    updateMode: Auto
+status:
+  conditions:
+  - lastTransitionTime: "2024-06-03T00:11:36Z"
+    status: "False"
+    type: LowConfidence
+  - lastTransitionTime: "2024-06-03T00:02:36Z"
+    status: "True"
+    type: RecommendationProvided
+  recommendation:
+    containerRecommendations:
+    - containerName: hapi-fhir-jpaserver-starter-1
+      lowerBound:
+        memory: 3Gi
+      target:
+        memory: 4Gi
+      uncappedTarget:
+        memory: "4381999104"
+      upperBound:
+        memory: 4Gi

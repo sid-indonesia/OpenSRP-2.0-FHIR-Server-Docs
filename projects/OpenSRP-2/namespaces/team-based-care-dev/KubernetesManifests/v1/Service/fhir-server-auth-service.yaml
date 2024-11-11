@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/backend-config: '{"default": "fhir-server-backend-config"}'
+    cloud.google.com/neg: '{"ingress":true}'
+    cloud.google.com/neg-status: '{"network_endpoint_groups":{"8080":"k8s1-ca21d307-team-based-care--fhir-server-auth-se-808-d4c7790a"},"zones":["asia-southeast2-b","asia-southeast2-c"]}'
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"cloud.google.com/backend-config":"{\"default\": \"fhir-server-backend-config\"}","cloud.google.com/neg":"{\"ingress\":true}","cloud.google.com/neg-status":"{\"network_endpoint_groups\":{\"8080\":\"k8s1-ca21d307-team-based-care--fhir-server-auth-se-808-d4c7790a\"},\"zones\":[\"asia-southeast2-a\",\"asia-southeast2-b\",\"asia-southeast2-c\"]}"},"creationTimestamp":"2023-12-07T07:45:44Z","labels":{"app":"fhir-server-auth"},"name":"fhir-server-auth-service","namespace":"team-based-care-dev","resourceVersion":"121678076","uid":"eb26764c-dc77-40fe-9093-2dffa92e81e1"},"spec":{"clusterIP":"34.118.226.107","clusterIPs":["34.118.226.107"],"internalTrafficPolicy":"Cluster","ipFamilies":["IPv4"],"ipFamilyPolicy":"SingleStack","ports":[{"port":8080,"protocol":"TCP","targetPort":8080}],"selector":{"app":"fhir-server-auth"},"sessionAffinity":"None","type":"ClusterIP"},"status":{"loadBalancer":{}}}
+  creationTimestamp: "2023-12-07T07:45:44Z"
+  labels:
+    app: fhir-server-auth
+  name: fhir-server-auth-service
+  namespace: team-based-care-dev
+  resourceVersion: "470243081"
+  uid: eb26764c-dc77-40fe-9093-2dffa92e81e1
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: fhir-server-auth
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

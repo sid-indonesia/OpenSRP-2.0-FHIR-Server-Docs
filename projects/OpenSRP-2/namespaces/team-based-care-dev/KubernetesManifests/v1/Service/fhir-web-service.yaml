@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/backend-config: '{"default": "fhir-web-backend-config"}'
+    cloud.google.com/neg: '{"ingress":true}'
+    cloud.google.com/neg-status: '{"network_endpoint_groups":{"3000":"k8s1-ca21d307-team-based-care-dev-fhir-web-service-300-ba617263"},"zones":["asia-southeast2-b","asia-southeast2-c"]}'
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"cloud.google.com/backend-config":"{\"default\": \"fhir-web-backend-config\"}","cloud.google.com/neg":"{\"ingress\":true}","cloud.google.com/neg-status":"{\"network_endpoint_groups\":{\"3000\":\"k8s1-ca21d307-team-based-care-dev-fhir-web-service-300-ba617263\"},\"zones\":[\"asia-southeast2-a\",\"asia-southeast2-b\",\"asia-southeast2-c\"]}"},"creationTimestamp":"2023-12-07T07:45:44Z","labels":{"app":"fhir-web"},"name":"fhir-web-service","namespace":"team-based-care-dev","resourceVersion":"121678263","uid":"5dc89497-922c-4362-8381-cbd17b08d1df"},"spec":{"clusterIP":"34.118.226.23","clusterIPs":["34.118.226.23"],"internalTrafficPolicy":"Cluster","ipFamilies":["IPv4"],"ipFamilyPolicy":"SingleStack","ports":[{"name":"3000-to-3000-tcp","port":3000,"protocol":"TCP","targetPort":3000},{"name":"80-to-80-tcp","port":80,"protocol":"TCP","targetPort":80},{"name":"443-to-443-tcp","port":443,"protocol":"TCP","targetPort":443}],"selector":{"app":"fhir-web"},"sessionAffinity":"None","type":"ClusterIP"},"status":{"loadBalancer":{}}}
+  creationTimestamp: "2023-12-07T07:45:44Z"
+  labels:
+    app: fhir-web
+  name: fhir-web-service
+  namespace: team-based-care-dev
+  resourceVersion: "470243085"
+  uid: 5dc89497-922c-4362-8381-cbd17b08d1df
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: 3000-to-3000-tcp
+    port: 3000
+    protocol: TCP
+    targetPort: 3000
+  - name: 80-to-80-tcp
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  - name: 443-to-443-tcp
+    port: 443
+    protocol: TCP
+    targetPort: 443
+  selector:
+    app: fhir-web
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

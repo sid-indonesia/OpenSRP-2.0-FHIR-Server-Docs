@@ -1,0 +1,136 @@
+apiVersion: v1
+data:
+  hapi_page_url_allowed_queries.json: |
+    {
+      "entries": [
+        {
+          "path": "",
+          "queryParams": {
+            "_getpages": "ANY_VALUE"
+          },
+          "allowExtraParams": true,
+          "allParamsRequired": true
+        },
+        {
+          "path": "Composition",
+          "methodType": "GET",
+          "queryParams": {
+            "identifier":"ANY_VALUE"
+          },
+          "allowExtraParams": true,
+          "allParamsRequired": true
+        },
+        {
+          "path": "Binary",
+          "methodType": "GET",
+          "queryParams": {
+            "_id":"ANY_VALUE"
+          },
+          "allowExtraParams": true,
+          "allParamsRequired": true
+        },
+        {
+          "path": "Questionnaire",
+          "methodType": "GET",
+          "queryParams": {
+            "_id": "ANY_VALUE"
+          }
+        },
+        {
+          "path": "PractitionerDetail",
+          "methodType": "GET",
+          "queryParams": {
+            "keycloak-uuid": "ANY_VALUE"
+          }
+        },
+        {
+          "path": "StructureMap",
+          "methodType": "GET",
+          "queryParams": {
+            "_id": "ANY_VALUE"
+          }
+        },
+        {
+          "path": "List",
+          "methodType": "GET",
+          "queryParams": {
+            "_id": "ANY_VALUE"
+          }
+        },
+        {
+          "path": "PlanDefinition",
+          "methodType": "GET",
+          "queryParams": {
+            "_id": "ANY_VALUE"
+          }
+        },
+        {
+          "path": "Library",
+          "methodType": "GET",
+          "queryParams": {
+            "_id": "ANY_VALUE"
+          }
+        },
+        {
+          "path": "Measure",
+          "methodType": "GET",
+          "queryParams": {
+            "_id": "ANY_VALUE"
+          }
+        },
+        {
+          "path": "LocationHierarchy",
+          "methodType": "GET",
+          "queryParams": {
+            "identifier": "ANY_VALUE"
+          }
+        },
+        {
+          "path": "ActivityDefinition",
+          "methodType": "GET",
+          "queryParams": {
+            "_id": "ANY_VALUE"
+          }
+        },
+        {
+          "path": "CodeSystem",
+          "methodType": "GET",
+          "queryParams": {
+            "_id": "ANY_VALUE"
+          }
+        },
+        {
+          "path": "ConceptMap",
+          "methodType": "GET",
+          "queryParams": {
+            "_id": "ANY_VALUE"
+          }
+        },
+        {
+          "path": "Device",
+          "methodType": "GET",
+          "queryParams": {
+            "_id": "ANY_VALUE"
+          }
+        },
+        {
+          "path": "StructureDefinition",
+          "methodType": "GET",
+          "queryParams": {
+            "_id": "ANY_VALUE"
+          }
+        }
+      ]
+    }
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"hapi_page_url_allowed_queries.json":"{\n  \"entries\": [\n    {\n      \"path\": \"\",\n      \"queryParams\": {\n        \"_getpages\": \"ANY_VALUE\"\n      },\n      \"allowExtraParams\": true,\n      \"allParamsRequired\": true\n    },\n    {\n      \"path\": \"Composition\",\n      \"methodType\": \"GET\",\n      \"queryParams\": {\n        \"identifier\":\"ANY_VALUE\"\n      },\n      \"allowExtraParams\": true,\n      \"allParamsRequired\": true\n    },\n    {\n      \"path\": \"Binary\",\n      \"methodType\": \"GET\",\n      \"queryParams\": {\n        \"_id\":\"ANY_VALUE\"\n      },\n      \"allowExtraParams\": true,\n      \"allParamsRequired\": true\n    },\n    {\n      \"path\": \"Questionnaire\",\n      \"methodType\": \"GET\",\n      \"queryParams\": {\n        \"_id\": \"ANY_VALUE\"\n      }\n    },\n    {\n      \"path\": \"PractitionerDetail\",\n      \"methodType\": \"GET\",\n      \"queryParams\": {\n        \"keycloak-uuid\": \"ANY_VALUE\"\n      }\n    },\n    {\n      \"path\": \"StructureMap\",\n      \"methodType\": \"GET\",\n      \"queryParams\": {\n        \"_id\": \"ANY_VALUE\"\n      }\n    },\n    {\n      \"path\": \"List\",\n      \"methodType\": \"GET\",\n      \"queryParams\": {\n        \"_id\": \"ANY_VALUE\"\n      }\n    },\n    {\n      \"path\": \"PlanDefinition\",\n      \"methodType\": \"GET\",\n      \"queryParams\": {\n        \"_id\": \"ANY_VALUE\"\n      }\n    },\n    {\n      \"path\": \"Library\",\n      \"methodType\": \"GET\",\n      \"queryParams\": {\n        \"_id\": \"ANY_VALUE\"\n      }\n    },\n    {\n      \"path\": \"Measure\",\n      \"methodType\": \"GET\",\n      \"queryParams\": {\n        \"_id\": \"ANY_VALUE\"\n      }\n    },\n    {\n      \"path\": \"LocationHierarchy\",\n      \"methodType\": \"GET\",\n      \"queryParams\": {\n        \"identifier\": \"ANY_VALUE\"\n      }\n    },\n    {\n      \"path\": \"ActivityDefinition\",\n      \"methodType\": \"GET\",\n      \"queryParams\": {\n        \"_id\": \"ANY_VALUE\"\n      }\n    },\n    {\n      \"path\": \"CodeSystem\",\n      \"methodType\": \"GET\",\n      \"queryParams\": {\n        \"_id\": \"ANY_VALUE\"\n      }\n    },\n    {\n      \"path\": \"ConceptMap\",\n      \"methodType\": \"GET\",\n      \"queryParams\": {\n        \"_id\": \"ANY_VALUE\"\n      }\n    },\n    {\n      \"path\": \"Device\",\n      \"methodType\": \"GET\",\n      \"queryParams\": {\n        \"_id\": \"ANY_VALUE\"\n      }\n    },\n    {\n      \"path\": \"StructureDefinition\",\n      \"methodType\": \"GET\",\n      \"queryParams\": {\n        \"_id\": \"ANY_VALUE\"\n      }\n    }\n  ]\n}\n"},"kind":"ConfigMap","metadata":{"annotations":{},"creationTimestamp":"2023-12-08T02:42:14Z","labels":{"app":"fhir-gateway"},"name":"fhir-gateway-hapi-page-url-allowed-queries","namespace":"team-based-care-dev","resourceVersion":"92885212","uid":"28b14798-bbab-42fd-a175-f64844646eba"}}
+  creationTimestamp: "2023-12-08T02:42:14Z"
+  labels:
+    app: fhir-gateway
+  name: fhir-gateway-hapi-page-url-allowed-queries
+  namespace: team-based-care-dev
+  resourceVersion: "491197303"
+  uid: 28b14798-bbab-42fd-a175-f64844646eba

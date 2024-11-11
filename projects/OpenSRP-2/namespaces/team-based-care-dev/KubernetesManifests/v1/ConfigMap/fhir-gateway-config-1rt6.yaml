@@ -1,0 +1,25 @@
+apiVersion: v1
+data:
+  _JAVA_OPTIONS: -XX:+UseStringDeduplication -XX:+UseG1GC -XX:InitialHeapSize=256m
+    -XX:MaxRAMPercentage=75.0 -XX:+DisableExplicitGC -XX:+ParallelRefProcEnabled
+  ACCESS_CHECKER: permission
+  ALLOWED_QUERIES_FILE: resources/hapi_page_url_allowed_queries.json
+  BACKEND_TYPE: HAPI
+  PROXY_TO: http://fhir-server-service:8080/fhir
+  RUN_MODE: PROD
+  SPRING_APPLICATION_JSON: |
+    {"server":{"max-http-header-size":"500KB"}}
+  SYNC_FILTER_IGNORE_RESOURCES_FILE: resources/hapi_sync_filter_ignored_queries.json
+  TOKEN_ISSUER: https://trainee01.sso.dev.sid-indonesia.org/auth/realms/team-based-care
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"ACCESS_CHECKER":"permission","ALLOWED_QUERIES_FILE":"resources/hapi_page_url_allowed_queries.json","BACKEND_TYPE":"HAPI","PROXY_TO":"http://fhir-server-service:8080/fhir","RUN_MODE":"PROD","SPRING_APPLICATION_JSON":"{\"server\":{\"max-http-header-size\":\"500KB\"}}\n","SYNC_FILTER_IGNORE_RESOURCES_FILE":"resources/hapi_sync_filter_ignored_queries.json","TOKEN_ISSUER":"https://trainee01.sso.dev.sid-indonesia.org/auth/realms/team-based-care","_JAVA_OPTIONS":"-XX:+UseStringDeduplication -XX:+UseG1GC -XX:InitialHeapSize=256m -XX:MaxRAMPercentage=75.0 -XX:+DisableExplicitGC -XX:+ParallelRefProcEnabled"},"kind":"ConfigMap","metadata":{"annotations":{},"creationTimestamp":"2023-12-08T02:42:14Z","labels":{"app":"fhir-gateway"},"name":"fhir-gateway-config-1rt6","namespace":"team-based-care-dev","resourceVersion":"491195619","uid":"83722d0b-be5d-4ee6-8b07-ad528c33fccf"}}
+  creationTimestamp: "2023-12-08T02:42:14Z"
+  labels:
+    app: fhir-gateway
+  name: fhir-gateway-config-1rt6
+  namespace: team-based-care-dev
+  resourceVersion: "491196497"
+  uid: 83722d0b-be5d-4ee6-8b07-ad528c33fccf

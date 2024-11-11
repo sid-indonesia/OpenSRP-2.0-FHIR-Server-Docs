@@ -1,0 +1,43 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.gcp.kubernetes.io/pre-shared-cert: mcrt-e903f2a0-89c6-436c-ad93-f09a0126d1d1
+    ingress.kubernetes.io/backends: '{"k8s1-ca21d307-kube-system-default-http-backend-80-634f5cd7":"HEALTHY","k8s1-ca21d307-team-based-care--fhir-server-auth-se-808-d4c7790a":"HEALTHY"}'
+    ingress.kubernetes.io/forwarding-rule: k8s2-fr-qoog4mt0-team-based-care--fhir-server-auth-ing-w4l0cjpa
+    ingress.kubernetes.io/https-forwarding-rule: k8s2-fs-qoog4mt0-team-based-care--fhir-server-auth-ing-w4l0cjpa
+    ingress.kubernetes.io/https-target-proxy: k8s2-ts-qoog4mt0-team-based-care--fhir-server-auth-ing-w4l0cjpa
+    ingress.kubernetes.io/redirect-url-map: k8s2-rm-qoog4mt0-team-based-care--fhir-server-auth-ing-w4l0cjpa
+    ingress.kubernetes.io/ssl-cert: mcrt-e903f2a0-89c6-436c-ad93-f09a0126d1d1
+    ingress.kubernetes.io/static-ip: k8s2-fr-qoog4mt0-team-based-care--fhir-server-auth-ing-w4l0cjpa
+    ingress.kubernetes.io/target-proxy: k8s2-tp-qoog4mt0-team-based-care--fhir-server-auth-ing-w4l0cjpa
+    ingress.kubernetes.io/url-map: k8s2-um-qoog4mt0-team-based-care--fhir-server-auth-ing-w4l0cjpa
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"networking.gke.io/managed-certificates":"fhir-server.dev.sid-indonesia.org-tls","networking.gke.io/v1beta1.FrontendConfig":"http-to-https-redirect"},"name":"fhir-server-auth-ingress","namespace":"team-based-care-dev"},"spec":{"rules":[{"host":"trainee01.fhir-server.dev.sid-indonesia.org","http":{"paths":[{"backend":{"service":{"name":"fhir-server-auth-service","port":{"number":8080}}},"path":"/*","pathType":"ImplementationSpecific"}]}}]},"status":{"loadBalancer":{"ingress":[{"ip":"34.160.247.162"}]}}}
+    kubernetes.io/ingress.global-static-ip-name: fhir-server-auth-dev
+    networking.gke.io/managed-certificates: fhir-server.dev.sid-indonesia.org-tls
+    networking.gke.io/v1beta1.FrontendConfig: http-to-https-redirect
+  creationTimestamp: "2023-12-07T07:45:45Z"
+  finalizers:
+  - networking.gke.io/ingress-finalizer-V2
+  generation: 1
+  name: fhir-server-auth-ingress
+  namespace: team-based-care-dev
+  resourceVersion: "458507246"
+  uid: 4ebc128e-cb54-4d90-b956-3b4c85b8abd4
+spec:
+  rules:
+  - host: trainee01.fhir-server.dev.sid-indonesia.org
+    http:
+      paths:
+      - backend:
+          service:
+            name: fhir-server-auth-service
+            port:
+              number: 8080
+        path: /*
+        pathType: ImplementationSpecific
+status:
+  loadBalancer:
+    ingress:
+    - ip: 34.160.247.162

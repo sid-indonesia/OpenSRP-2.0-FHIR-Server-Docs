@@ -1,0 +1,174 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    autopilot.gke.io/resource-adjustment: '{"input":{"containers":[{"limits":{"ephemeral-storage":"1Gi"},"requests":{"cpu":"3","ephemeral-storage":"1Gi","memory":"2Gi"},"name":"fhir-gateway-1"}]},"output":{"containers":[{"limits":{"ephemeral-storage":"1Gi"},"requests":{"cpu":"3","ephemeral-storage":"1Gi","memory":"3Gi"},"name":"fhir-gateway-1"}]},"modified":true}'
+    autopilot.gke.io/warden-version: 2.9.34
+    deployment.kubernetes.io/revision: "22"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"autopilot.gke.io/resource-adjustment":"{\"input\":{\"containers\":[{\"limits\":{\"ephemeral-storage\":\"1Gi\"},\"requests\":{\"cpu\":\"3\",\"ephemeral-storage\":\"1Gi\",\"memory\":\"2Gi\"},\"name\":\"fhir-gateway-1\"}]},\"output\":{\"containers\":[{\"limits\":{\"ephemeral-storage\":\"1Gi\"},\"requests\":{\"cpu\":\"3\",\"ephemeral-storage\":\"1Gi\",\"memory\":\"3Gi\"},\"name\":\"fhir-gateway-1\"}]},\"modified\":true}","autopilot.gke.io/warden-version":"2.9.34","deployment.kubernetes.io/revision":"21"},"creationTimestamp":"2023-12-08T02:42:15Z","generation":209,"labels":{"app":"fhir-gateway"},"name":"fhir-gateway","namespace":"team-based-care-dev","resourceVersion":"458516298","uid":"cfc719e5-72cd-4f12-bbe7-41ec8fb9e386"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app":"fhir-gateway"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"fhir-gateway"}},"spec":{"containers":[{"env":[{"name":"PROXY_TO","valueFrom":{"configMapKeyRef":{"key":"PROXY_TO","name":"fhir-gateway-config-1rt6"}}},{"name":"TOKEN_ISSUER","valueFrom":{"configMapKeyRef":{"key":"TOKEN_ISSUER","name":"fhir-gateway-config-1rt6"}}},{"name":"ACCESS_CHECKER","valueFrom":{"configMapKeyRef":{"key":"ACCESS_CHECKER","name":"fhir-gateway-config-1rt6"}}},{"name":"ALLOWED_QUERIES_FILE","valueFrom":{"configMapKeyRef":{"key":"ALLOWED_QUERIES_FILE","name":"fhir-gateway-config-1rt6"}}},{"name":"SYNC_FILTER_IGNORE_RESOURCES_FILE","valueFrom":{"configMapKeyRef":{"key":"SYNC_FILTER_IGNORE_RESOURCES_FILE","name":"fhir-gateway-config-1rt6"}}},{"name":"_JAVA_OPTIONS","valueFrom":{"configMapKeyRef":{"key":"_JAVA_OPTIONS","name":"fhir-gateway-config-1rt6"}}},{"name":"RUN_MODE","valueFrom":{"configMapKeyRef":{"key":"RUN_MODE","name":"fhir-gateway-config-1rt6"}}},{"name":"BACKEND_TYPE","valueFrom":{"configMapKeyRef":{"key":"BACKEND_TYPE","name":"fhir-gateway-config-1rt6"}}}],"image":"onaio/fhir-gateway-plugin:v2.0.0","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":30,"httpGet":{"path":"/fhir/.well-known/smart-configuration","port":"http","scheme":"HTTP"},"initialDelaySeconds":600,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"name":"fhir-gateway-1","ports":[{"containerPort":8080,"name":"http","protocol":"TCP"}],"readinessProbe":{"failureThreshold":60,"httpGet":{"path":"/fhir/.well-known/smart-configuration","port":"http","scheme":"HTTP"},"initialDelaySeconds":30,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"resources":{"limits":{"ephemeral-storage":"1Gi"},"requests":{"cpu":"1","ephemeral-storage":"1Gi","memory":"2Gi"}},"securityContext":{"capabilities":{"drop":["NET_RAW"]}},"startupProbe":{"failureThreshold":60,"httpGet":{"path":"/fhir/.well-known/smart-configuration","port":"http","scheme":"HTTP"},"initialDelaySeconds":31,"periodSeconds":5,"successThreshold":1,"timeoutSeconds":1},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/app/resources/hapi_page_url_allowed_queries.json","name":"hapi-page-url-allowed-queries","subPath":"hapi_page_url_allowed_queries.json"},{"mountPath":"/app/resources/hapi_sync_filter_ignored_queries.json","name":"hapi-sync-filter-ignored-queries","subPath":"hapi_sync_filter_ignored_queries.json"}]}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{"seccompProfile":{"type":"RuntimeDefault"}},"terminationGracePeriodSeconds":30,"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"amd64"}],"volumes":[{"configMap":{"defaultMode":420,"name":"fhir-gateway-hapi-page-url-allowed-queries"},"name":"hapi-page-url-allowed-queries"},{"configMap":{"defaultMode":420,"name":"fhir-gateway-hapi-sync-filter-ignored-queries"},"name":"hapi-sync-filter-ignored-queries"}]}}},"status":{"availableReplicas":1,"conditions":[{"lastTransitionTime":"2023-12-08T02:42:15Z","lastUpdateTime":"2024-06-10T09:59:11Z","message":"ReplicaSet \"fhir-gateway-5bc996859d\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"},{"lastTransitionTime":"2024-10-13T03:06:53Z","lastUpdateTime":"2024-10-13T03:06:53Z","message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"}],"observedGeneration":209,"readyReplicas":1,"replicas":1,"updatedReplicas":1}}
+  creationTimestamp: "2023-12-08T02:42:15Z"
+  generation: 214
+  labels:
+    app: fhir-gateway
+  name: fhir-gateway
+  namespace: team-based-care-dev
+  resourceVersion: "489801562"
+  uid: cfc719e5-72cd-4f12-bbe7-41ec8fb9e386
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: fhir-gateway
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: fhir-gateway
+    spec:
+      containers:
+      - env:
+        - name: PROXY_TO
+          valueFrom:
+            configMapKeyRef:
+              key: PROXY_TO
+              name: fhir-gateway-config-1rt6
+        - name: TOKEN_ISSUER
+          valueFrom:
+            configMapKeyRef:
+              key: TOKEN_ISSUER
+              name: fhir-gateway-config-1rt6
+        - name: ACCESS_CHECKER
+          valueFrom:
+            configMapKeyRef:
+              key: ACCESS_CHECKER
+              name: fhir-gateway-config-1rt6
+        - name: ALLOWED_QUERIES_FILE
+          valueFrom:
+            configMapKeyRef:
+              key: ALLOWED_QUERIES_FILE
+              name: fhir-gateway-config-1rt6
+        - name: SYNC_FILTER_IGNORE_RESOURCES_FILE
+          valueFrom:
+            configMapKeyRef:
+              key: SYNC_FILTER_IGNORE_RESOURCES_FILE
+              name: fhir-gateway-config-1rt6
+        - name: _JAVA_OPTIONS
+          valueFrom:
+            configMapKeyRef:
+              key: _JAVA_OPTIONS
+              name: fhir-gateway-config-1rt6
+        - name: RUN_MODE
+          valueFrom:
+            configMapKeyRef:
+              key: RUN_MODE
+              name: fhir-gateway-config-1rt6
+        - name: BACKEND_TYPE
+          valueFrom:
+            configMapKeyRef:
+              key: BACKEND_TYPE
+              name: fhir-gateway-config-1rt6
+        image: onaio/fhir-gateway-plugin:v2.0.0
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 30
+          httpGet:
+            path: /fhir/.well-known/smart-configuration
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 600
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: fhir-gateway-1
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 60
+          httpGet:
+            path: /fhir/.well-known/smart-configuration
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            ephemeral-storage: 1Gi
+          requests:
+            cpu: "1"
+            ephemeral-storage: 1Gi
+            memory: 2Gi
+        securityContext:
+          capabilities:
+            drop:
+            - NET_RAW
+        startupProbe:
+          failureThreshold: 60
+          httpGet:
+            path: /fhir/.well-known/smart-configuration
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 31
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /app/resources/hapi_page_url_allowed_queries.json
+          name: hapi-page-url-allowed-queries
+          subPath: hapi_page_url_allowed_queries.json
+        - mountPath: /app/resources/hapi_sync_filter_ignored_queries.json
+          name: hapi-sync-filter-ignored-queries
+          subPath: hapi_sync_filter_ignored_queries.json
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        key: kubernetes.io/arch
+        operator: Equal
+        value: amd64
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: fhir-gateway-hapi-page-url-allowed-queries
+        name: hapi-page-url-allowed-queries
+      - configMap:
+          defaultMode: 420
+          name: fhir-gateway-hapi-sync-filter-ignored-queries
+        name: hapi-sync-filter-ignored-queries
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2023-12-08T02:42:15Z"
+    lastUpdateTime: "2024-10-15T07:01:35Z"
+    message: ReplicaSet "fhir-gateway-549bd577fb" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2024-11-07T01:08:56Z"
+    lastUpdateTime: "2024-11-07T01:08:56Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  observedGeneration: 214
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

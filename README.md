@@ -1,9 +1,6 @@
 # OpenSRP-2.0-FHIR-Server-Docs
 
-- If using DBMS cloud service such as [Google Cloud SQL](https://cloud.google.com/sql/), create database with the same name as the one being referenced within the server applications configurations.
-- Create DB user(s) for the database, and the least privileges permissions for each user(s). See [sample SQL script for modifying permissions](/permissions.sql).
-- In older versions of HAPI FHIR JPA Server (< [6.6.0](https://hapifhir.io/hapi-fhir/docs/introduction/changelog.html#changes-24)), change data type of `public.hfj_res_ver.res_text_vc` from `varchar(4000)` to `text` in HAPI FHIR database. The [GitHub Issue](https://github.com/hapifhir/hapi-fhir/pull/4763).
-- Restart FHIR Gateway after all other components ready to serve to avoid issue related to `JWT verification failed with error: The Token's Signature resulted invalid when verified using the Algorithm: SHA256withRSA`
+This repo consists of documentations and config samples for deploying OpenSRP 2.0 FHIR Server, FHIR Gateway, Keycloak, and FHIR Web in a Kubernetes (k8s) cluster.
 
 # Helpful Tools
 
@@ -24,6 +21,14 @@
 - Preferred password generator: [Password Generator](https://passwordsgenerator.net/)
 - Preferred version control: [GitHub](https://github.com/)
 
+# Extra Notes
+
+- Follow the steps within [./projects/OpenSRP-2/namespaces/team-based-care-dev/README.md](./projects/OpenSRP-2/namespaces/team-based-care-dev/README.md#steps)
+- If using DBMS cloud service such as [Google Cloud SQL](https://cloud.google.com/sql/), create database via the cloud console or SQL client, the database name needs to be the same name as the one being referenced in the server applications configurations files.
+- Create DB user(s) for the database, and the least privileges permissions for each user(s). See [sample SQL script for modifying permissions](./permissions.sql).
+- In older versions of HAPI FHIR JPA Server (< [6.6.0](https://hapifhir.io/hapi-fhir/docs/introduction/changelog.html#changes-24)), change data type of `public.hfj_res_ver.res_text_vc` from `varchar(4000)` to `text` in HAPI FHIR database. The [GitHub Issue](https://github.com/hapifhir/hapi-fhir/pull/4763).
+- Restart FHIR Gateway after all other components ready to serve to avoid issue related to `JWT verification failed with error: The Token's Signature resulted invalid when verified using the Algorithm: SHA256withRSA`
+
 # Useful Commands
 
 Levi preferred to call them "Magic Spells", along with his some years of experience in technological wizardry.
@@ -31,7 +36,7 @@ Levi preferred to call them "Magic Spells", along with his some years of experie
 ## Create a namespace
 
 ```bash
-NAMESPACE_NAME=trainee01 && \
+NAMESPACE_NAME=team-based-care-dev && \
 kubectl create namespace $NAMESPACE_NAME
 ```
 
@@ -89,7 +94,7 @@ kubectl apply -n "$NAMESPACE_NAME" -f projects/$PROJECT_NAME/namespaces/$NAMESPA
 kubectx gke_trainee01-sid_asia-southeast2_trainee01-autopilot-cluster && \
 # kubectx minikube && \
 PROJECT_NAME=OpenSRP-2 && \
-NAMESPACE_NAME=team-based-care-stage && \
+NAMESPACE_NAME=team-based-care-dev && \
 MANIFEST_NAME=fhir-gateway-hapi-page-url-allowed-queries && \
 KUBE_RESOURCE_TYPE=ConfigMap && \
 API_VERSION=$(kubectl get -n "$NAMESPACE_NAME" ${KUBE_RESOURCE_TYPE} ${MANIFEST_NAME} -o jsonpath={.apiVersion}) && \

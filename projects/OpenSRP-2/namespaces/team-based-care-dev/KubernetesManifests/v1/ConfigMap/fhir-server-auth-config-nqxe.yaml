@@ -1,0 +1,109 @@
+apiVersion: v1
+data:
+  JAVA_OPTS: -XX:+UseStringDeduplication -XX:+UseG1GC -XX:InitialHeapSize=512m -XX:MaxRAMPercentage=75.0
+    -XX:+DisableExplicitGC -XX:+ParallelRefProcEnabled
+  SPRING_APPLICATION_JSON: |
+    {
+      "keycloak": {
+          "auth-server-url": "https://trainee01.sso.dev.sid-indonesia.org/auth/",
+          "credentials": {
+              "secret": "${CLIENT_SECRET}"
+          },
+          "enabled": true,
+          "realm": "team-based-care",
+          "resource": "${CLIENT_ID}",
+          "ssl-required": "none"
+      },
+      "sentry": {
+          "enabled": false
+      },
+      "server": {
+          "max-http-header-size": 40000
+      },
+      "spring": {
+          "batch": {
+              "job": {
+                  "enabled": false
+              }
+          },
+          "datasource": {
+              "driverClassName": "org.postgresql.Driver",
+              "max-active": 15,
+              "password": "${DB_PASSWORD}",
+              "url": "jdbc:postgresql://postgresql-dev.ancillary-services/hapi_fhir_team_based_care",
+              "username": "admin_team_based_care"
+          },
+          "flyway": {
+              "baselineOnMigrate": true,
+              "check-location": false,
+              "enabled": false
+          },
+          "jpa": {
+              "properties": {
+                  "hibernate.dialect": "org.hibernate.dialect.PostgreSQLDialect",
+                  "hibernate.format_sql": false,
+                  "hibernate.hbm2ddl.auto": "update",
+                  "hibernate.show_sql": false
+              }
+          },
+          "main": {
+              "allow-bean-definition-overriding": true
+          }
+      },
+      "hapi": {
+          "fhir": {
+              "allow_cascading_deletes": true,
+              "allow_multiple_delete": true,
+              "client_id_strategy": "ANY",
+              "cors": {
+                  "allow_Credentials": true,
+                  "allowed_origin": [
+                      "*"
+                  ]
+              },
+              "delete_expunge_enabled": true,
+              "expunge_enabled": true,
+              "fhir_version": "R4",
+              "search-coord-core-pool-size": 20,
+              "search-coord-max-pool-size": 100,
+              "search-coord-queue-capacity": 200,
+              "subscription": {
+                  "resthook_enabled": true
+              },
+              "tester": {
+                  "global": {
+                      "fhir_version": "R4",
+                      "name": "Global Tester",
+                      "refuse_to_fetch_third_party_urls": false,
+                      "server_address": "https://hapi.fhir.org/baseR4"
+                  },
+                  "home": {
+                      "fhir_version": "R4",
+                      "name": "Local Tester",
+                      "refuse_to_fetch_third_party_urls": false,
+                      "server_address": "https://trainee01.fhir-server.dev.sid-indonesia.org/fhir"
+                  }
+              },
+              "use_apache_address_strategy": true,
+              "use_apache_address_strategy_https": true,
+              "validation": {
+                  "requests_enabled": false,
+                  "responses_enabled": false
+              },
+              "advanced_lucene_indexing": false,
+              "inline_resource_storage_below_size": 2147483647
+          }
+      }
+    }
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"JAVA_OPTS":"-XX:+UseStringDeduplication -XX:+UseG1GC -XX:InitialHeapSize=512m -XX:MaxRAMPercentage=75.0 -XX:+DisableExplicitGC -XX:+ParallelRefProcEnabled","SPRING_APPLICATION_JSON":"{\n  \"keycloak\": {\n      \"auth-server-url\": \"https://trainee01.sso.dev.sid-indonesia.org/auth/\",\n      \"credentials\": {\n          \"secret\": \"${CLIENT_SECRET}\"\n      },\n      \"enabled\": true,\n      \"realm\": \"team-based-care\",\n      \"resource\": \"${CLIENT_ID}\",\n      \"ssl-required\": \"none\"\n  },\n  \"sentry\": {\n      \"enabled\": false\n  },\n  \"server\": {\n      \"max-http-header-size\": 40000\n  },\n  \"spring\": {\n      \"batch\": {\n          \"job\": {\n              \"enabled\": false\n          }\n      },\n      \"datasource\": {\n          \"driverClassName\": \"org.postgresql.Driver\",\n          \"max-active\": 15,\n          \"password\": \"${DB_PASSWORD}\",\n          \"url\": \"jdbc:postgresql://postgresql-dev.ancillary-services/hapi_fhir_team_based_care\",\n          \"username\": \"admin_team_based_care\"\n      },\n      \"flyway\": {\n          \"baselineOnMigrate\": true,\n          \"check-location\": false,\n          \"enabled\": false\n      },\n      \"jpa\": {\n          \"properties\": {\n              \"hibernate.dialect\": \"org.hibernate.dialect.PostgreSQLDialect\",\n              \"hibernate.format_sql\": false,\n              \"hibernate.hbm2ddl.auto\": \"update\",\n              \"hibernate.show_sql\": false\n          }\n      },\n      \"main\": {\n          \"allow-bean-definition-overriding\": true\n      }\n  },\n  \"hapi\": {\n      \"fhir\": {\n          \"allow_cascading_deletes\": true,\n          \"allow_multiple_delete\": true,\n          \"client_id_strategy\": \"ANY\",\n          \"cors\": {\n              \"allow_Credentials\": true,\n              \"allowed_origin\": [\n                  \"*\"\n              ]\n          },\n          \"delete_expunge_enabled\": true,\n          \"expunge_enabled\": true,\n          \"fhir_version\": \"R4\",\n          \"search-coord-core-pool-size\": 20,\n          \"search-coord-max-pool-size\": 100,\n          \"search-coord-queue-capacity\": 200,\n          \"subscription\": {\n              \"resthook_enabled\": true\n          },\n          \"tester\": {\n              \"global\": {\n                  \"fhir_version\": \"R4\",\n                  \"name\": \"Global Tester\",\n                  \"refuse_to_fetch_third_party_urls\": false,\n                  \"server_address\": \"https://hapi.fhir.org/baseR4\"\n              },\n              \"home\": {\n                  \"fhir_version\": \"R4\",\n                  \"name\": \"Local Tester\",\n                  \"refuse_to_fetch_third_party_urls\": false,\n                  \"server_address\": \"https://trainee01.fhir-server.dev.sid-indonesia.org/fhir\"\n              }\n          },\n          \"use_apache_address_strategy\": true,\n          \"use_apache_address_strategy_https\": true,\n          \"validation\": {\n              \"requests_enabled\": false,\n              \"responses_enabled\": false\n          },\n          \"advanced_lucene_indexing\": false,\n          \"inline_resource_storage_below_size\": 2147483647\n      }\n  }\n}\n"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app":"fhir-server-auth"},"name":"fhir-server-auth-config-nqxe","namespace":"team-based-care-dev"}}
+  creationTimestamp: "2023-12-08T02:42:14Z"
+  labels:
+    app: fhir-server-auth
+  name: fhir-server-auth-config-nqxe
+  namespace: team-based-care-dev
+  resourceVersion: "168285645"
+  uid: 8854989e-891d-4890-869f-b433e3fc64e5

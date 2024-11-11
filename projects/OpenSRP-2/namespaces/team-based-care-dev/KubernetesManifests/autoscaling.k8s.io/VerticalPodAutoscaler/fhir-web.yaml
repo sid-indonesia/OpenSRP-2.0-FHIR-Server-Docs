@@ -1,0 +1,48 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"autoscaling.k8s.io/v1","kind":"VerticalPodAutoscaler","metadata":{"annotations":{},"name":"fhir-web","namespace":"team-based-care-dev"},"spec":{"resourcePolicy":{"containerPolicies":[{"containerName":"*","controlledResources":["memory"],"maxAllowed":{"memory":"1024Mi"},"minAllowed":{"memory":"64Mi"},"mode":"Auto"}]},"targetRef":{"apiVersion":"apps/v1","kind":"Deployment","name":"fhir-web"},"updatePolicy":{"updateMode":"Auto"}},"status":{"conditions":[{"lastTransitionTime":"2023-12-07T07:57:17Z","status":"False","type":"LowConfidence"},{"lastTransitionTime":"2023-12-07T07:48:17Z","status":"True","type":"RecommendationProvided"}],"recommendation":{"containerRecommendations":[{"containerName":"web-1","lowerBound":{"memory":"256Mi"},"target":{"memory":"256Mi"},"uncappedTarget":{"memory":"58720256"},"upperBound":{"memory":"898629632"}}]}}}
+  creationTimestamp: "2023-12-08T02:42:18Z"
+  generation: 10335
+  name: fhir-web
+  namespace: team-based-care-dev
+  resourceVersion: "491160658"
+  uid: 86fe25c0-a33d-4aaa-9a90-cb055147f054
+spec:
+  resourcePolicy:
+    containerPolicies:
+    - containerName: '*'
+      controlledResources:
+      - memory
+      maxAllowed:
+        memory: 1024Mi
+      minAllowed:
+        memory: 64Mi
+      mode: Auto
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: fhir-web
+  updatePolicy:
+    updateMode: Auto
+status:
+  conditions:
+  - lastTransitionTime: "2024-06-03T00:14:36Z"
+    status: "False"
+    type: LowConfidence
+  - lastTransitionTime: "2024-06-03T00:05:37Z"
+    status: "True"
+    type: RecommendationProvided
+  recommendation:
+    containerRecommendations:
+    - containerName: web-1
+      lowerBound:
+        memory: "135266304"
+      target:
+        memory: "142606336"
+      uncappedTarget:
+        memory: "142606336"
+      upperBound:
+        memory: "144703488"

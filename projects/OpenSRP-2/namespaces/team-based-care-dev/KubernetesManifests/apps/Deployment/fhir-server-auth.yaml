@@ -1,0 +1,145 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    autopilot.gke.io/resource-adjustment: '{"input":{"containers":[{"limits":{"ephemeral-storage":"1Gi"},"requests":{"cpu":"6","ephemeral-storage":"1Gi","memory":"4Gi"},"name":"hapi-fhir-jpaserver-starter-1"}]},"output":{"containers":[{"limits":{"ephemeral-storage":"1Gi"},"requests":{"cpu":"6","ephemeral-storage":"1Gi","memory":"6Gi"},"name":"hapi-fhir-jpaserver-starter-1"}]},"modified":true}'
+    autopilot.gke.io/warden-version: 2.9.16
+    deployment.kubernetes.io/revision: "28"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"autopilot.gke.io/resource-adjustment":"{\"input\":{\"containers\":[{\"limits\":{\"ephemeral-storage\":\"1Gi\"},\"requests\":{\"cpu\":\"6\",\"ephemeral-storage\":\"1Gi\",\"memory\":\"4Gi\"},\"name\":\"hapi-fhir-jpaserver-starter-1\"}]},\"output\":{\"containers\":[{\"limits\":{\"ephemeral-storage\":\"1Gi\"},\"requests\":{\"cpu\":\"6\",\"ephemeral-storage\":\"1Gi\",\"memory\":\"6Gi\"},\"name\":\"hapi-fhir-jpaserver-starter-1\"}]},\"modified\":true}","autopilot.gke.io/warden-version":"2.9.16","deployment.kubernetes.io/revision":"27"},"creationTimestamp":"2023-12-08T02:42:15Z","generation":231,"labels":{"app":"fhir-server-auth"},"name":"fhir-server-auth","namespace":"team-based-care-dev","resourceVersion":"458498541","uid":"3942a4d9-d216-4cf4-95c0-c45a6d2f51e5"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app":"fhir-server-auth"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"fhir-server-auth"}},"spec":{"containers":[{"env":[{"name":"CHANGE_THIS_TO_TRIGGER_ROLLING_UPDATE","value":"4"},{"name":"SPRING_APPLICATION_JSON","valueFrom":{"configMapKeyRef":{"key":"SPRING_APPLICATION_JSON","name":"fhir-server-auth-config-nqxe"}}},{"name":"JAVA_OPTS","valueFrom":{"configMapKeyRef":{"key":"JAVA_OPTS","name":"fhir-server-auth-config-nqxe"}}},{"name":"DB_PASSWORD","valueFrom":{"secretKeyRef":{"key":"DB_PASSWORD","name":"hapi-fhir-secrets"}}},{"name":"CLIENT_ID","valueFrom":{"configMapKeyRef":{"key":"KEYCLOAK_IMPORT_CLIENT_ID_FHIR_SERVER_AUTH","name":"keycloak-config-nkks"}}},{"name":"CLIENT_SECRET","valueFrom":{"secretKeyRef":{"key":"KEYCLOAK_IMPORT_CLIENT_SECRET_FHIR_SERVER_AUTH","name":"keycloak-secrets"}}}],"image":"opensrp/hapi-fhir-jpaserver-starter:v6.1.9-SNAPSHOT","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":30,"httpGet":{"path":"/fhir/metadata","port":"http","scheme":"HTTP"},"initialDelaySeconds":600,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"name":"hapi-fhir-jpaserver-starter-1","ports":[{"containerPort":8080,"name":"http","protocol":"TCP"}],"readinessProbe":{"failureThreshold":60,"httpGet":{"path":"/fhir/metadata","port":"http","scheme":"HTTP"},"initialDelaySeconds":30,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"resources":{"limits":{"ephemeral-storage":"1Gi"},"requests":{"cpu":"500m","ephemeral-storage":"1Gi","memory":"3Gi"}},"securityContext":{"capabilities":{"drop":["NET_RAW"]}},"startupProbe":{"failureThreshold":60,"httpGet":{"path":"/fhir/metadata","port":"http","scheme":"HTTP"},"initialDelaySeconds":100,"periodSeconds":5,"successThreshold":1,"timeoutSeconds":1},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{"seccompProfile":{"type":"RuntimeDefault"}},"terminationGracePeriodSeconds":30,"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"amd64"}]}}},"status":{"availableReplicas":1,"conditions":[{"lastTransitionTime":"2023-12-12T08:07:15Z","lastUpdateTime":"2024-06-10T04:47:33Z","message":"ReplicaSet \"fhir-server-auth-6d9bcd4cdb\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"},{"lastTransitionTime":"2024-10-13T02:48:43Z","lastUpdateTime":"2024-10-13T02:48:43Z","message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"}],"observedGeneration":231,"readyReplicas":1,"replicas":1,"updatedReplicas":1}}
+  creationTimestamp: "2023-12-08T02:42:15Z"
+  generation: 234
+  labels:
+    app: fhir-server-auth
+  name: fhir-server-auth
+  namespace: team-based-care-dev
+  resourceVersion: "484422244"
+  uid: 3942a4d9-d216-4cf4-95c0-c45a6d2f51e5
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: fhir-server-auth
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: fhir-server-auth
+    spec:
+      containers:
+      - env:
+        - name: CHANGE_THIS_TO_TRIGGER_ROLLING_UPDATE
+          value: "4"
+        - name: SPRING_APPLICATION_JSON
+          valueFrom:
+            configMapKeyRef:
+              key: SPRING_APPLICATION_JSON
+              name: fhir-server-auth-config-nqxe
+        - name: JAVA_OPTS
+          valueFrom:
+            configMapKeyRef:
+              key: JAVA_OPTS
+              name: fhir-server-auth-config-nqxe
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: DB_PASSWORD
+              name: hapi-fhir-secrets
+        - name: CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              key: KEYCLOAK_IMPORT_CLIENT_ID_FHIR_SERVER_AUTH
+              name: keycloak-config-nkks
+        - name: CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: KEYCLOAK_IMPORT_CLIENT_SECRET_FHIR_SERVER_AUTH
+              name: keycloak-secrets
+        image: opensrp/hapi-fhir-jpaserver-starter:v6.1.9-SNAPSHOT
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 30
+          httpGet:
+            path: /fhir/metadata
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 600
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: hapi-fhir-jpaserver-starter-1
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 60
+          httpGet:
+            path: /fhir/metadata
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            ephemeral-storage: 1Gi
+          requests:
+            cpu: 500m
+            ephemeral-storage: 1Gi
+            memory: 3Gi
+        securityContext:
+          capabilities:
+            drop:
+            - NET_RAW
+        startupProbe:
+          failureThreshold: 60
+          httpGet:
+            path: /fhir/metadata
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 100
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        key: kubernetes.io/arch
+        operator: Equal
+        value: amd64
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2023-12-12T08:07:15Z"
+    lastUpdateTime: "2024-10-15T06:55:57Z"
+    message: ReplicaSet "fhir-server-auth-6c9c754957" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2024-11-02T17:47:51Z"
+    lastUpdateTime: "2024-11-02T17:47:51Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  observedGeneration: 234
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

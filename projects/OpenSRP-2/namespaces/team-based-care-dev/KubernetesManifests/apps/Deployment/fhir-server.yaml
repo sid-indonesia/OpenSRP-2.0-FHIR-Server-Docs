@@ -1,0 +1,135 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    autopilot.gke.io/resource-adjustment: '{"input":{"containers":[{"requests":{"cpu":"1500m","ephemeral-storage":"1Gi","memory":"3Gi"},"name":"hapi-fhir-jpaserver-starter-1"}]},"output":{"containers":[{"limits":{"ephemeral-storage":"1Gi"},"requests":{"cpu":"1500m","ephemeral-storage":"1Gi","memory":"3Gi"},"name":"hapi-fhir-jpaserver-starter-1"}]},"modified":true}'
+    autopilot.gke.io/warden-version: 2.9.16
+    deployment.kubernetes.io/revision: "18"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"autopilot.gke.io/resource-adjustment":"{\"input\":{\"containers\":[{\"requests\":{\"cpu\":\"1500m\",\"ephemeral-storage\":\"1Gi\",\"memory\":\"3Gi\"},\"name\":\"hapi-fhir-jpaserver-starter-1\"}]},\"output\":{\"containers\":[{\"limits\":{\"ephemeral-storage\":\"1Gi\"},\"requests\":{\"cpu\":\"1500m\",\"ephemeral-storage\":\"1Gi\",\"memory\":\"3Gi\"},\"name\":\"hapi-fhir-jpaserver-starter-1\"}]},\"modified\":true}","autopilot.gke.io/warden-version":"2.9.16","deployment.kubernetes.io/revision":"17"},"creationTimestamp":"2023-12-08T02:42:16Z","generation":224,"labels":{"app":"fhir-server"},"name":"fhir-server","namespace":"team-based-care-dev","resourceVersion":"458518035","uid":"1eaeea32-aac4-4d0b-834b-213f8a37e198"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app":"fhir-server"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"fhir-server"}},"spec":{"containers":[{"env":[{"name":"CHANGE_THIS_TO_TRIGGER_ROLLING_UPDATE","value":"6"},{"name":"SPRING_APPLICATION_JSON","valueFrom":{"configMapKeyRef":{"key":"SPRING_APPLICATION_JSON","name":"fhir-server-config-dyzg"}}},{"name":"JAVA_OPTS","valueFrom":{"configMapKeyRef":{"key":"JAVA_OPTS","name":"fhir-server-config-dyzg"}}},{"name":"DB_PASSWORD","valueFrom":{"secretKeyRef":{"key":"DB_PASSWORD","name":"hapi-fhir-secrets"}}}],"image":"opensrp/hapi-fhir-jpaserver-starter:v6.1.9-SNAPSHOT","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":30,"httpGet":{"path":"/","port":"http","scheme":"HTTP"},"initialDelaySeconds":600,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"name":"hapi-fhir-jpaserver-starter-1","ports":[{"containerPort":8080,"name":"http","protocol":"TCP"}],"readinessProbe":{"failureThreshold":60,"httpGet":{"path":"/","port":"http","scheme":"HTTP"},"initialDelaySeconds":120,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"resources":{"limits":{"ephemeral-storage":"1Gi"},"requests":{"cpu":"1","ephemeral-storage":"1Gi","memory":"3Gi"}},"securityContext":{"capabilities":{"drop":["NET_RAW"]}},"startupProbe":{"failureThreshold":60,"httpGet":{"path":"/","port":"http","scheme":"HTTP"},"initialDelaySeconds":100,"periodSeconds":5,"successThreshold":1,"timeoutSeconds":1},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{"seccompProfile":{"type":"RuntimeDefault"}},"terminationGracePeriodSeconds":30,"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"amd64"}]}}},"status":{"availableReplicas":1,"conditions":[{"lastTransitionTime":"2023-12-12T07:06:42Z","lastUpdateTime":"2024-06-10T04:46:24Z","message":"ReplicaSet \"fhir-server-5d5855f5bf\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"},{"lastTransitionTime":"2024-10-13T03:08:43Z","lastUpdateTime":"2024-10-13T03:08:43Z","message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"}],"observedGeneration":224,"readyReplicas":1,"replicas":1,"updatedReplicas":1}}
+  creationTimestamp: "2023-12-08T02:42:16Z"
+  generation: 227
+  labels:
+    app: fhir-server
+  name: fhir-server
+  namespace: team-based-care-dev
+  resourceVersion: "484409294"
+  uid: 1eaeea32-aac4-4d0b-834b-213f8a37e198
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: fhir-server
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: fhir-server
+    spec:
+      containers:
+      - env:
+        - name: CHANGE_THIS_TO_TRIGGER_ROLLING_UPDATE
+          value: "6"
+        - name: SPRING_APPLICATION_JSON
+          valueFrom:
+            configMapKeyRef:
+              key: SPRING_APPLICATION_JSON
+              name: fhir-server-config-dyzg
+        - name: JAVA_OPTS
+          valueFrom:
+            configMapKeyRef:
+              key: JAVA_OPTS
+              name: fhir-server-config-dyzg
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: DB_PASSWORD
+              name: hapi-fhir-secrets
+        image: opensrp/hapi-fhir-jpaserver-starter:v6.1.9-SNAPSHOT
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 30
+          httpGet:
+            path: /
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 600
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: hapi-fhir-jpaserver-starter-1
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 60
+          httpGet:
+            path: /
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 120
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            ephemeral-storage: 1Gi
+          requests:
+            cpu: "1"
+            ephemeral-storage: 1Gi
+            memory: 3Gi
+        securityContext:
+          capabilities:
+            drop:
+            - NET_RAW
+        startupProbe:
+          failureThreshold: 60
+          httpGet:
+            path: /
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 100
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        key: kubernetes.io/arch
+        operator: Equal
+        value: amd64
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2023-12-12T07:06:42Z"
+    lastUpdateTime: "2024-10-15T07:47:50Z"
+    message: ReplicaSet "fhir-server-95b94c86c" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2024-11-02T17:33:34Z"
+    lastUpdateTime: "2024-11-02T17:33:34Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  observedGeneration: 227
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
