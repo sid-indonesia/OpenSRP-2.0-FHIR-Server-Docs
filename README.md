@@ -8,20 +8,23 @@ This repo consists of documentations and config samples for deploying OpenSRP 2.
 - [`gcloud`](https://cloud.google.com/sdk/docs/install)
 - [`kubectl`](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl#install_kubectl)
 - [`kubectx` + `kubens`: Power tools for kubectl](https://github.com/ahmetb/kubectx)
+- [Helm](https://helm.sh/docs/intro/quickstart/)
 
 ## For deploying in local machine
 - [`Docker`](https://docs.docker.com/engine/install/)
 - [`kubectl`](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl#install_kubectl)
 - [`kubectx` + `kubens`: Power tools for kubectl](https://github.com/ahmetb/kubectx)
 - [Minikube](https://minikube.sigs.k8s.io/docs/start)
+- [Helm](https://helm.sh/docs/intro/quickstart/)
 
 ## Optional
 - Preferred code editor: [Cursor](https://www.cursor.com/)
 - Preferred DB administration tool: [DBeaver](https://dbeaver.io/download/)
 - Preferred password generator: [Password Generator](https://passwordsgenerator.net/)
 - Preferred version control: [GitHub](https://github.com/)
+- On Windows, preferred terminal: [Git Bash](https://git-scm.com/downloads)
 
-# Extra Notes
+# Steps
 
 - Follow the steps within [./projects/OpenSRP-2/namespaces/team-based-care-dev/README.md](./projects/OpenSRP-2/namespaces/team-based-care-dev/README.md#steps)
 - If using DBMS cloud service such as [Google Cloud SQL](https://cloud.google.com/sql/), create database via the cloud console or SQL client, the database name needs to be the same name as the one being referenced in the server applications configurations files.
@@ -33,17 +36,30 @@ This repo consists of documentations and config samples for deploying OpenSRP 2.
 
 Levi preferred to call them "Magic Spells", along with his some years of experience in technological wizardry.
 
+## Connect to the k8s cluster
+
+```bash
+TRAINEE_ACCOUNT=trainee101 && \
+gcloud container clusters get-credentials ${TRAINEE_ACCOUNT}-autopilot-cluster --region asia-southeast2 --project ${TRAINEE_ACCOUNT}-sid
+```
+
 ## Create a namespace
 
 ```bash
+TRAINEE_ACCOUNT=trainee101 && \
+kubectx gke_${TRAINEE_ACCOUNT}-sid_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
 NAMESPACE_NAME=team-based-care-dev && \
+kubectl create namespace $NAMESPACE_NAME && \
+\
+NAMESPACE_NAME=ancillary-services && \
 kubectl create namespace $NAMESPACE_NAME
 ```
 
 ## Apply all manifests in some namespaces
 
 ```bash
-kubectx gke_trainee01-sid_asia-southeast2_trainee01-autopilot-cluster && \
+TRAINEE_ACCOUNT=trainee101 && \
+kubectx gke_${TRAINEE_ACCOUNT}-sid_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
 # kubectx minikube && \
 PROJECT_NAME=OpenSRP-2 && \
 NAMESPACE_NAME=** && \
@@ -57,7 +73,7 @@ done
 ## Refresh all manifests in some namespaces (or projects)
 
 ```bash
-kubectx gke_trainee01-sid_asia-southeast2_trainee01-autopilot-cluster && \
+kubectx gke_trainee101-sid_asia-southeast2_trainee101-autopilot-cluster && \
 # kubectx minikube && \
 PROJECT_NAME=OpenSRP-2 && \
 NAMESPACE_NAME=team-based-care* && \
@@ -79,7 +95,7 @@ done
 ## Apply all manifests in a namespace
 
 ```bash
-kubectx gke_trainee01-sid_asia-southeast2_trainee01-autopilot-cluster && \
+kubectx gke_trainee101-sid_asia-southeast2_trainee101-autopilot-cluster && \
 # kubectx minikube && \
 PROJECT_NAME=OpenSRP-2 && \
 NAMESPACE_NAME=superset && \
@@ -91,12 +107,12 @@ kubectl apply -n "$NAMESPACE_NAME" -f projects/$PROJECT_NAME/namespaces/$NAMESPA
 ## Refresh a k8s manifest `yaml`
 
 ```bash
-kubectx gke_trainee01-sid_asia-southeast2_trainee01-autopilot-cluster && \
+kubectx gke_trainee101-sid_asia-southeast2_trainee101-autopilot-cluster && \
 # kubectx minikube && \
 PROJECT_NAME=OpenSRP-2 && \
 NAMESPACE_NAME=team-based-care-dev && \
-MANIFEST_NAME=fhir-gateway-hapi-page-url-allowed-queries && \
-KUBE_RESOURCE_TYPE=ConfigMap && \
+MANIFEST_NAME=fhir-gateway-ingress && \
+KUBE_RESOURCE_TYPE=Ingress && \
 API_VERSION=$(kubectl get -n "$NAMESPACE_NAME" ${KUBE_RESOURCE_TYPE} ${MANIFEST_NAME} -o jsonpath={.apiVersion}) && \
 API_PATH=${API_VERSION%%/*} && \
 DIR_PATH=projects/${PROJECT_NAME}/namespaces/${NAMESPACE_NAME}/KubernetesManifests/${API_PATH}/${KUBE_RESOURCE_TYPE} && \
@@ -114,7 +130,7 @@ kubectl apply -n "$NAMESPACE_NAME" -f ${DIR_PATH}/${MANIFEST_NAME}.yaml
 ## Apply new manifests in a folder all at once
 
 ```bash
-kubectx gke_trainee01-sid_asia-southeast2_trainee01-autopilot-cluster && \
+kubectx gke_trainee101-sid_asia-southeast2_trainee101-autopilot-cluster && \
 # kubectx minikube && \
 PROJECT_NAME=OpenSRP-2 && \
 NAMESPACE_NAME=federated-fhir-ecosystem && \
@@ -128,7 +144,7 @@ kubectl apply -n "$NAMESPACE_NAME" -f ${DIR_PATH} -R
 ## Get many manifests and put them into `manifests.yaml` + secret manifests and put them into `secrets.yaml`
 
 ```bash
-kubectx gke_trainee01-sid_asia-southeast2_trainee01-autopilot-cluster && \
+kubectx gke_trainee101-sid_asia-southeast2_trainee101-autopilot-cluster && \
 # kubectx minikube && \
 PROJECT_NAME=OpenSRP-2 && \
 NAMESPACE_NAME=federated-fhir-ecosystem && \
@@ -142,7 +158,7 @@ kubectl get secrets -n "${NAMESPACE_NAME}" -o yaml > ${DIR_PATH}/secrets.yaml
 ## Get many manifests and put them into one `yaml`
 
 ```bash
-kubectx gke_trainee01-sid_asia-southeast2_trainee01-autopilot-cluster && \
+kubectx gke_trainee101-sid_asia-southeast2_trainee101-autopilot-cluster && \
 # kubectx minikube && \
 kubectl get deployment,sts,cm,hpa,vpa,service,ingress -o yaml > some-manifests.yaml
 ```
@@ -150,7 +166,7 @@ kubectl get deployment,sts,cm,hpa,vpa,service,ingress -o yaml > some-manifests.y
 ## Get all manifests (excluding `Secret`, `ConfigMap`, `Ingress`, `ManagedCertificate`, etc...) and put them into one `yaml`
 
 ```bash
-kubectx gke_trainee01-sid_asia-southeast2_trainee01-autopilot-cluster && \
+kubectx gke_trainee101-sid_asia-southeast2_trainee101-autopilot-cluster && \
 # kubectx minikube && \
 kubectl get all -o yaml > all-manifests.yaml
 ```
@@ -158,7 +174,7 @@ kubectl get all -o yaml > all-manifests.yaml
 ## Get secrets and put them into `secrets.yaml`
 
 ```bash
-kubectx gke_trainee01-sid_asia-southeast2_trainee01-autopilot-cluster && \
+kubectx gke_trainee101-sid_asia-southeast2_trainee101-autopilot-cluster && \
 # kubectx minikube && \
 kubectl get secrets -o yaml > secrets.yaml
 ```

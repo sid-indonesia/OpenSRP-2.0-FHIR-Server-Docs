@@ -140,7 +140,7 @@ image:
 ingress:
   annotations:
     kubernetes.io/ingress.global-static-ip-name: sso-dev
-    networking.gke.io/managed-certificates: trainee01.sso.dev.sid-indonesia.org-tls
+    networking.gke.io/managed-certificates: sso.dev.sid-indonesia.org-tls
     networking.gke.io/v1beta1.FrontendConfig: http-to-https-redirect
   console:
     annotations: {}
@@ -155,7 +155,7 @@ ingress:
   enabled: true
   labels: {}
   rules:
-    - host: trainee01.sso.dev.sid-indonesia.org-tls
+    - host: trainee101.sso.dev.sid-indonesia.org
       paths:
         - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/'
           pathType: Prefix

@@ -2,32 +2,32 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    ingress.gcp.kubernetes.io/pre-shared-cert: mcrt-537b8eb3-baf0-49fe-9a23-36d1894896f5
-    ingress.kubernetes.io/backends: '{"k8s1-ca21d307-kube-system-default-http-backend-80-634f5cd7":"HEALTHY","k8s1-ca21d307-team-based-care-d-fhir-gateway-servi-808-3bd6af71":"HEALTHY"}'
-    ingress.kubernetes.io/forwarding-rule: k8s2-fr-qoog4mt0-team-based-care-de-fhir-gateway-ingre-w5z2nq2z
-    ingress.kubernetes.io/https-forwarding-rule: k8s2-fs-qoog4mt0-team-based-care-de-fhir-gateway-ingre-w5z2nq2z
-    ingress.kubernetes.io/https-target-proxy: k8s2-ts-qoog4mt0-team-based-care-de-fhir-gateway-ingre-w5z2nq2z
-    ingress.kubernetes.io/redirect-url-map: k8s2-rm-qoog4mt0-team-based-care-de-fhir-gateway-ingre-w5z2nq2z
-    ingress.kubernetes.io/ssl-cert: mcrt-537b8eb3-baf0-49fe-9a23-36d1894896f5
+    # ingress.gcp.kubernetes.io/pre-shared-cert: mcrt-dc83a6ba-d5d8-45ad-b4e9-f2078ab09a46
+    ingress.kubernetes.io/backends: '{"k8s-be-32643--5f2f07ccb37bf3c0":"HEALTHY","k8s1-5f2f07cc-team-based-care-d-fhir-gateway-servi-808-56211717":"UNHEALTHY"}'
+    ingress.kubernetes.io/forwarding-rule: k8s2-fr-c0akynqg-team-based-care-de-fhir-gateway-ingre-6da952m0
+    ingress.kubernetes.io/https-forwarding-rule: k8s2-fs-c0akynqg-team-based-care-de-fhir-gateway-ingre-6da952m0
+    ingress.kubernetes.io/https-target-proxy: k8s2-ts-c0akynqg-team-based-care-de-fhir-gateway-ingre-6da952m0
+    ingress.kubernetes.io/redirect-url-map: k8s2-rm-c0akynqg-team-based-care-de-fhir-gateway-ingre-6da952m0
+    ingress.kubernetes.io/ssl-cert: mcrt-dc83a6ba-d5d8-45ad-b4e9-f2078ab09a46
     ingress.kubernetes.io/static-ip: k8s2-fr-qoog4mt0-team-based-care-de-fhir-gateway-ingre-w5z2nq2z
-    ingress.kubernetes.io/target-proxy: k8s2-tp-qoog4mt0-team-based-care-de-fhir-gateway-ingre-w5z2nq2z
-    ingress.kubernetes.io/url-map: k8s2-um-qoog4mt0-team-based-care-de-fhir-gateway-ingre-w5z2nq2z
+    ingress.kubernetes.io/target-proxy: k8s2-tp-c0akynqg-team-based-care-de-fhir-gateway-ingre-6da952m0
+    ingress.kubernetes.io/url-map: k8s2-um-c0akynqg-team-based-care-de-fhir-gateway-ingre-6da952m0
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"networking.gke.io/managed-certificates":"fhir-gateway.dev.sid-indonesia.org-tls","networking.gke.io/v1beta1.FrontendConfig":"http-to-https-redirect"},"name":"fhir-gateway-ingress","namespace":"team-based-care-dev"},"spec":{"rules":[{"host":"trainee01.fhir-gateway.dev.sid-indonesia.org","http":{"paths":[{"backend":{"service":{"name":"fhir-gateway-service","port":{"number":8080}}},"path":"/","pathType":"Prefix"}]}}]},"status":{"loadBalancer":{"ingress":[{"ip":"35.244.231.205"}]}}}
+      {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"ingress.gcp.kubernetes.io/pre-shared-cert":"mcrt-dc83a6ba-d5d8-45ad-b4e9-f2078ab09a46","ingress.kubernetes.io/backends":"{\"k8s1-ca21d307-kube-system-default-http-backend-80-634f5cd7\":\"HEALTHY\",\"k8s1-ca21d307-team-based-care-d-fhir-gateway-servi-808-3bd6af71\":\"HEALTHY\"}","ingress.kubernetes.io/forwarding-rule":"k8s2-fr-qoog4mt0-team-based-care-de-fhir-gateway-ingre-w5z2nq2z","ingress.kubernetes.io/https-forwarding-rule":"k8s2-fs-qoog4mt0-team-based-care-de-fhir-gateway-ingre-w5z2nq2z","ingress.kubernetes.io/https-target-proxy":"k8s2-ts-qoog4mt0-team-based-care-de-fhir-gateway-ingre-w5z2nq2z","ingress.kubernetes.io/redirect-url-map":"k8s2-rm-qoog4mt0-team-based-care-de-fhir-gateway-ingre-w5z2nq2z","ingress.kubernetes.io/ssl-cert":"mcrt-537b8eb3-baf0-49fe-9a23-36d1894896f5","ingress.kubernetes.io/static-ip":"k8s2-fr-qoog4mt0-team-based-care-de-fhir-gateway-ingre-w5z2nq2z","ingress.kubernetes.io/target-proxy":"k8s2-tp-qoog4mt0-team-based-care-de-fhir-gateway-ingre-w5z2nq2z","ingress.kubernetes.io/url-map":"k8s2-um-qoog4mt0-team-based-care-de-fhir-gateway-ingre-w5z2nq2z","kubernetes.io/ingress.global-static-ip-name":"fhir-gateway-dev","networking.gke.io/managed-certificates":"fhir-gateway.dev.sid-indonesia.org-tls","networking.gke.io/v1beta1.FrontendConfig":"http-to-https-redirect"},"creationTimestamp":"2024-11-12T02:31:04Z","finalizers":["networking.gke.io/ingress-finalizer-V2"],"generation":1,"name":"fhir-gateway-ingress","namespace":"team-based-care-dev","resourceVersion":"13794","uid":"fbaa312a-1d47-4ac6-852e-025c376fa89a"},"spec":{"rules":[{"host":"trainee101.fhir-gateway.dev.sid-indonesia.org","http":{"paths":[{"backend":{"service":{"name":"fhir-gateway-service","port":{"number":8080}}},"path":"/","pathType":"Prefix"}]}}]},"status":{"loadBalancer":{}}}
     kubernetes.io/ingress.global-static-ip-name: fhir-gateway-dev
     networking.gke.io/managed-certificates: fhir-gateway.dev.sid-indonesia.org-tls
     networking.gke.io/v1beta1.FrontendConfig: http-to-https-redirect
-  creationTimestamp: "2023-12-07T07:45:45Z"
+  creationTimestamp: "2024-11-12T02:31:04Z"
   finalizers:
   - networking.gke.io/ingress-finalizer-V2
   generation: 1
   name: fhir-gateway-ingress
   namespace: team-based-care-dev
-  resourceVersion: "482749554"
-  uid: bafd2050-84ba-4936-9dec-545a96fe8aca
+  resourceVersion: "40005"
+  uid: fbaa312a-1d47-4ac6-852e-025c376fa89a
 spec:
   rules:
-  - host: trainee01.fhir-gateway.dev.sid-indonesia.org
+  - host: trainee101.fhir-gateway.dev.sid-indonesia.org
     http:
       paths:
       - backend:
@@ -40,4 +40,4 @@ spec:
 status:
   loadBalancer:
     ingress:
-    - ip: 35.244.231.205
+    - ip: 34.107.227.8

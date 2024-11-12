@@ -3,7 +3,7 @@ kind: ManagedCertificate
 metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"networking.gke.io/v1","kind":"ManagedCertificate","metadata":{"annotations":{},"creationTimestamp":"2023-09-26T10:38:03Z","generation":6,"managedFields":[{"apiVersion":"networking.gke.io/v1beta1","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{".":{},"f:domains":{}}},"manager":"GoogleCloudConsole","operation":"Update","time":"2023-09-26T10:38:03Z"},{"apiVersion":"networking.gke.io/v1","fieldsType":"FieldsV1","fieldsV1":{"f:status":{".":{},"f:certificateName":{},"f:certificateStatus":{},"f:domainStatus":{},"f:expireTime":{}}},"manager":"managed-certificate-controller","operation":"Update","time":"2023-09-26T13:26:16Z"}],"name":"sso.dev.sid-indonesia.org-tls","namespace":"team-based-care-dev","resourceVersion":"19000206","uid":"b4a6eacc-b6bb-4ef1-a9f8-281c3c657cbf"},"spec":{"domains":["trainee01.sso.dev.sid-indonesia.org"]},"status":{"certificateName":"mcrt-43a7303e-bfef-44ed-9324-86c29f7ae3af","certificateStatus":"Active","domainStatus":[{"domain":"trainee01.sso.dev.sid-indonesia.org","status":"Active"}],"expireTime":"2023-12-25T05:09:39.000-08:00"}}
+      {"apiVersion":"networking.gke.io/v1","kind":"ManagedCertificate","metadata":{"annotations":{},"creationTimestamp":"2023-09-26T10:38:03Z","generation":6,"managedFields":[{"apiVersion":"networking.gke.io/v1beta1","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{".":{},"f:domains":{}}},"manager":"GoogleCloudConsole","operation":"Update","time":"2023-09-26T10:38:03Z"},{"apiVersion":"networking.gke.io/v1","fieldsType":"FieldsV1","fieldsV1":{"f:status":{".":{},"f:certificateName":{},"f:certificateStatus":{},"f:domainStatus":{},"f:expireTime":{}}},"manager":"managed-certificate-controller","operation":"Update","time":"2023-09-26T13:26:16Z"}],"name":"sso.dev.sid-indonesia.org-tls","namespace":"team-based-care-dev","resourceVersion":"19000206","uid":"b4a6eacc-b6bb-4ef1-a9f8-281c3c657cbf"},"spec":{"domains":["trainee101.sso.dev.sid-indonesia.org"]},"status":{"certificateName":"mcrt-43a7303e-bfef-44ed-9324-86c29f7ae3af","certificateStatus":"Active","domainStatus":[{"domain":"trainee101.sso.dev.sid-indonesia.org","status":"Active"}],"expireTime":"2023-12-25T05:09:39.000-08:00"}}
   creationTimestamp: "2023-12-07T07:45:45Z"
   generation: 9
   name: sso.dev.sid-indonesia.org-tls
@@ -12,11 +12,11 @@ metadata:
   uid: 47fd3298-2176-47dc-8fb0-16ddb017a486
 spec:
   domains:
-  - trainee01.sso.dev.sid-indonesia.org
+  - trainee101.sso.dev.sid-indonesia.org
 status:
   certificateName: mcrt-51bbe049-e182-4a84-a9ff-37191f720fd3
   certificateStatus: Active
   domainStatus:
-  - domain: trainee01.sso.dev.sid-indonesia.org
+  - domain: trainee101.sso.dev.sid-indonesia.org
     status: Active
   expireTime: "2024-12-22T13:52:20.000-08:00"

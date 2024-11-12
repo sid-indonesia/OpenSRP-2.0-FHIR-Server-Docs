@@ -3,15 +3,16 @@ kind: Endpoints
 metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"v1","kind":"Endpoints","metadata":{"annotations":{},"creationTimestamp":"2023-11-08T17:59:05Z","name":"postgresql-dev","namespace":"ancillary-services","resourceVersion":"62933714","uid":"8119ce6e-8160-4d33-9dc7-c0851f440b94"},"subsets":[{"addresses":[{"ip":"10.13.144.27"}],"ports":[{"port":5432,"protocol":"TCP"}]}]}
-  creationTimestamp: "2023-11-08T17:59:05Z"
+      {"apiVersion":"v1","kind":"Endpoints","metadata":{"annotations":{},"creationTimestamp":"2023-11-08T17:59:05Z","name":"postgresql-dev","namespace":"ancillary-services","resourceVersion":"223580842","uid":"8119ce6e-8160-4d33-9dc7-c0851f440b94"},"subsets":[{"addresses":[{"ip":"10.0.0.3"}],"ports":[{"port":5432,"protocol":"TCP"}]}]}
+  creationTimestamp: "2024-11-12T02:30:58Z"
   name: postgresql-dev
   namespace: ancillary-services
-  resourceVersion: "223580842"
-  uid: 8119ce6e-8160-4d33-9dc7-c0851f440b94
+  resourceVersion: "13609"
+  uid: 0febdd26-2c38-45fa-bd33-746a45b2a38a
 subsets:
 - addresses:
   - ip: CHANGE_THIS_TO_CLOUD_SQL_PRIVATE_IP
+  # - ip: 10.0.0.3
   ports:
   - port: 5432
     protocol: TCP

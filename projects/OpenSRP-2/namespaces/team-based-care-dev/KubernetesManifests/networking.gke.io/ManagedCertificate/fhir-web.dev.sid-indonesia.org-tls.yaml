@@ -3,7 +3,7 @@ kind: ManagedCertificate
 metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"networking.gke.io/v1","kind":"ManagedCertificate","metadata":{"annotations":{},"creationTimestamp":"2023-09-26T04:41:24Z","generation":12,"managedFields":[{"apiVersion":"networking.gke.io/v1beta1","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{".":{},"f:domains":{}}},"manager":"GoogleCloudConsole","operation":"Update","time":"2023-09-26T04:41:24Z"},{"apiVersion":"networking.gke.io/v1","fieldsType":"FieldsV1","fieldsV1":{"f:status":{".":{},"f:certificateName":{},"f:certificateStatus":{},"f:domainStatus":{},"f:expireTime":{}}},"manager":"managed-certificate-controller","operation":"Update","time":"2023-09-27T11:56:15Z"}],"name":"fhir-web.dev.sid-indonesia.org-tls","namespace":"team-based-care-dev","resourceVersion":"19954695","uid":"930a54c1-0253-4d35-b852-5a0b10c460cb"},"spec":{"domains":["trainee01.fhir-web.dev.sid-indonesia.org"]},"status":{"certificateName":"mcrt-fe6c975e-27f7-4cf5-a87b-7b5ecd1a68e5","certificateStatus":"Active","domainStatus":[{"domain":"trainee01.fhir-web.dev.sid-indonesia.org","status":"Active"}],"expireTime":"2023-12-26T03:47:45.000-08:00"}}
+      {"apiVersion":"networking.gke.io/v1","kind":"ManagedCertificate","metadata":{"annotations":{},"creationTimestamp":"2023-09-26T04:41:24Z","generation":12,"managedFields":[{"apiVersion":"networking.gke.io/v1beta1","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{".":{},"f:domains":{}}},"manager":"GoogleCloudConsole","operation":"Update","time":"2023-09-26T04:41:24Z"},{"apiVersion":"networking.gke.io/v1","fieldsType":"FieldsV1","fieldsV1":{"f:status":{".":{},"f:certificateName":{},"f:certificateStatus":{},"f:domainStatus":{},"f:expireTime":{}}},"manager":"managed-certificate-controller","operation":"Update","time":"2023-09-27T11:56:15Z"}],"name":"fhir-web.dev.sid-indonesia.org-tls","namespace":"team-based-care-dev","resourceVersion":"19954695","uid":"930a54c1-0253-4d35-b852-5a0b10c460cb"},"spec":{"domains":["trainee101.fhir-web.dev.sid-indonesia.org"]},"status":{"certificateName":"mcrt-fe6c975e-27f7-4cf5-a87b-7b5ecd1a68e5","certificateStatus":"Active","domainStatus":[{"domain":"trainee101.fhir-web.dev.sid-indonesia.org","status":"Active"}],"expireTime":"2023-12-26T03:47:45.000-08:00"}}
   creationTimestamp: "2023-12-07T07:45:45Z"
   generation: 9
   name: fhir-web.dev.sid-indonesia.org-tls
@@ -12,11 +12,11 @@ metadata:
   uid: c452e4c3-a45d-4691-9a0c-27777c35f36c
 spec:
   domains:
-  - trainee01.fhir-web.dev.sid-indonesia.org
+  - trainee101.fhir-web.dev.sid-indonesia.org
 status:
   certificateName: mcrt-9e2bde92-1ade-458d-98ec-4078390cbe5c
   certificateStatus: Active
   domainStatus:
-  - domain: trainee01.fhir-web.dev.sid-indonesia.org
+  - domain: trainee101.fhir-web.dev.sid-indonesia.org
     status: Active
   expireTime: "2024-12-29T09:17:41.000-08:00"
