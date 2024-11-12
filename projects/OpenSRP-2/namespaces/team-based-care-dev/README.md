@@ -6,7 +6,7 @@
 - Edit the content of [`keycloak-realm-json.yaml`](./KubernetesManifests/v1/ConfigMap/keycloak-realm-json.yaml) as needed (it is used to import the realm configuration at startup)
 - Change respective client ID and secrets in each OAuth client deployments (FHIR Web, FHIR Server with Auth, etc)
 - Create needed databases (`keycloak_gke`, `hapi_fhir_team_based_care`) and users
-- Apply the Kubernetes Manifests (`kubectl apply -f projects/NextGen/namespaces/team-based-care-dev -R`)
+- Apply the Kubernetes Manifests.
 
 # Steps
 
