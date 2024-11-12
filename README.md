@@ -5,12 +5,18 @@ This repo consists of documentations and config samples for deploying OpenSRP 2.
 # Helpful Tools
 
 ## For deploying in Google Cloud Platform
+
+- Use [Cloud Shell Editor](https://cloud.google.com/shell/docs/launching-cloud-shell-editor)
+
+or if you want to do in local machine:
+
 - [`gcloud`](https://cloud.google.com/sdk/docs/install)
 - [`kubectl`](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl#install_kubectl)
 - [`kubectx` + `kubens`: Power tools for kubectl](https://github.com/ahmetb/kubectx)
 - [Helm](https://helm.sh/docs/intro/quickstart/)
 
 ## For deploying in local machine
+
 - [`Docker`](https://docs.docker.com/engine/install/)
 - [`kubectl`](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl#install_kubectl)
 - [`kubectx` + `kubens`: Power tools for kubectl](https://github.com/ahmetb/kubectx)
@@ -18,6 +24,7 @@ This repo consists of documentations and config samples for deploying OpenSRP 2.
 - [Helm](https://helm.sh/docs/intro/quickstart/)
 
 ## Optional
+
 - Preferred code editor: [Cursor](https://www.cursor.com/)
 - Preferred DB administration tool: [DBeaver](https://dbeaver.io/download/)
 - Preferred password generator: [Password Generator](https://passwordsgenerator.net/)

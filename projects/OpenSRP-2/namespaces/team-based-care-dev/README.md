@@ -10,7 +10,8 @@
 
 # Steps
 
-1. In Google Cloud SQL, create instance of type "PostgreSQL 15" with the name "postgresql-dev" via console with configurations as instructed in the tutorial video.
+1. Replace all text value `trainee101` within all files (use [Global Search](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files)) with your assigned trainee account number (e.g. `trainee03`).
+2. In Google Cloud SQL, create instance of type "PostgreSQL 15" with the name "postgresql-dev" via console with configurations as instructed in the tutorial video.
 
    1. Choose Cloud SQL Edition "Enterprise".
    2. Choose Edition preset "Sandbox".
@@ -28,23 +29,45 @@
    14. Click on "CREATE INSTANCE" button.
    15. While waiting for the instance to be created, try to accomplish other steps that can be done in parallel.
    16. After the instance created, create database `hapi_fhir_team_based_care` and `keycloak_gke`, can be done via console.
-   17. Connect to the DBMS instance using [DBeaver](https://dbeaver.io/download/) or other SQL client, then create user `admin_team_based_care` and `keycloak_gke` by using the SQL script provided in [here](/permissions.sql), do not forget to connect the correct DB first.
+   17. In [`Endpoints\postgresql-dev.yaml`](../ancillary-services/KubernetesManifests/v1/Endpoints/postgresql-dev.yaml) Change `CHANGE_THIS_TO_CLOUD_SQL_PRIVATE_IP` to the correct value (Private IP Address of the newly-created Cloud SQL instance) after creating a Cloud SQL instance.
+   18. Connect to the DBMS instance using [DBeaver](https://dbeaver.io/download/) or other SQL client, then create user `admin_team_based_care` and `keycloak_gke` by using the SQL script provided in [here](/permissions.sql), do not forget to connect the correct DB first.
+       - Grant all privileges to the database `hapi_fhir_team_based_care` for user `admin_team_based_care`.
+       - Grant all privileges to the database `keycloak_gke` for user `keycloak_gke`.
 
-2. Create Kubernetes (k8s) autopilot cluster within Google Kubernetes Engine.
-3. In [`Endpoints\postgresql-dev.yaml`](../ancillary-services/KubernetesManifests/v1/Endpoints/postgresql-dev.yaml) Change `CHANGE_THIS_TO_CLOUD_SQL_PRIVATE_IP` to the correct value after creating a Cloud SQL instance.
-4. Apply all k8s manifests within the project folder [OpenSRP-2](/projects/OpenSRP-2)
+3. Create Kubernetes (k8s) autopilot cluster within Google Kubernetes Engine. Can use the following command in Cloud Shell:
+   ```bash
+   gcloud beta container --project "trainee101-sid" clusters create-auto "trainee101-autopilot-cluster" --region "asia-southeast2" --release-channel "regular" --enable-ip-access --no-enable-google-cloud-access --network "projects/trainee101-sid/global/networks/default" --subnetwork "projects/trainee101-sid/regions/asia-southeast2/subnetworks/default" --cluster-ipv4-cidr "/17" --binauthz-evaluation-mode=DISABLED
+   ```
+4. Within Cloud Shell, apply all k8s manifests within the project folder [OpenSRP-2](/projects/OpenSRP-2), make sure change directory to [the top folder "OpenSRP-2.0-FHIR-Server-Docs"](/) first, then execute these commands:
 
-### Alternative Steps
+   ```bash
+   # Create namespacess
+   TRAINEE_ACCOUNT=trainee101 && \
+   kubectx gke_${TRAINEE_ACCOUNT}-sid_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
+   NAMESPACE_NAME=team-based-care-dev && \
+   kubectl create namespace $NAMESPACE_NAME && \
+   \
+   NAMESPACE_NAME=ancillary-services && \
+   kubectl create namespace $NAMESPACE_NAME
+   \
+   \
+   \
+   # Apply all manifests in some namespaces
+   PROJECT_NAME=OpenSRP-2 && \
+   NAMESPACE_NAME=** && \
+   EXTRA_DIR_PATH=*/*/* && \
 
-You can either create a k8s cluster via the GCP console (UI) or alternatively via CLI:
+   for file in projects/$PROJECT_NAME/namespaces/$NAMESPACE_NAME/KubernetesManifests/$EXTRA_DIR_PATH; do
+   kubectl apply -f "$file"
+   done
+   ```
 
-```bash
-gcloud beta container --project "trainee101-sid" clusters create-auto "trainee101-autopilot-cluster" --region "asia-southeast2" --release-channel "regular" --enable-ip-access --no-enable-google-cloud-access --network "projects/trainee101-sid/global/networks/default" --subnetwork "projects/trainee101-sid/regions/asia-southeast2/subnetworks/default" --cluster-ipv4-cidr "/17" --binauthz-evaluation-mode=DISABLED
-```
+5. Helm add repo keycloak and then helm install keycloak, see [the markdown file within the Helm directory](/projects/OpenSRP-2/namespaces/team-based-care-dev/Helm/README.md).
+6. Wait for all workloads have green check mark which means they are ready to serve. (N.B.: FHIR Gateway workload will depend on Keycloak until Keycloak gets its TLS certificate active)
 
-### Static IP Addresses
+### Static External IP Addresses
 
-Static IP Addresses will be provisioned by SID's System Administrator for `trainee01`-`trainee10` along with their respective DNS A Records. Commands executed to reserve static global external IP addresses were:
+Static External IP Addresses will be provisioned by SID's System Administrator for `trainee01`-`trainee10` along with their respective DNS A Records. Commands executed to reserve static global external IP addresses were:
 
 ```bash
 TRAINEE_ACCOUNT=trainee101 && \
