@@ -11,7 +11,7 @@
 # Steps
 
 1. Replace all text value `trainee101` within all files (use [Global Search](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files)) with your assigned trainee account number (e.g. `trainee03`).
-2. In Google Cloud SQL, create instance of type "PostgreSQL 15" with the name "postgresql-dev" via console with configurations as instructed in the tutorial video.
+2. In Google Cloud SQL, create instance of type "PostgreSQL 15" with the name "postgresql-dev" via console with configurations as instructed in the [tutorial video](https://drive.google.com/file/d/114Ns61fyElFy9EFtmdvZmaRTBXTeFlRH/view?usp=drive_link).
 
    1. Choose Cloud SQL Edition "Enterprise".
    2. Choose Edition preset "Sandbox".
