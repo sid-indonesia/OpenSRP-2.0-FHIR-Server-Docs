@@ -36,14 +36,17 @@
 
 3. Create Kubernetes (k8s) autopilot cluster within Google Kubernetes Engine. Can use the following command in Cloud Shell:
    ```bash
-   gcloud beta container --project "trainee101-sid" clusters create-auto "trainee101-autopilot-cluster" --region "asia-southeast2" --release-channel "regular" --enable-ip-access --no-enable-google-cloud-access --network "projects/trainee101-sid/global/networks/default" --subnetwork "projects/trainee101-sid/regions/asia-southeast2/subnetworks/default" --cluster-ipv4-cidr "/17" --binauthz-evaluation-mode=DISABLED
+   TRAINEE_ACCOUNT=trainee101 && \
+   PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+   gcloud beta container --project "${PROJECT_ID}" clusters create-auto "${TRAINEE_ACCOUNT}-autopilot-cluster" --region "asia-southeast2" --release-channel "regular" --enable-ip-access --no-enable-google-cloud-access --network "projects/${PROJECT_ID}/global/networks/default" --subnetwork "projects/${PROJECT_ID}/regions/asia-southeast2/subnetworks/default" --cluster-ipv4-cidr "/17" --binauthz-evaluation-mode=DISABLED
    ```
 4. Within Cloud Shell, apply all k8s manifests within the project folder [OpenSRP-2](/projects/OpenSRP-2), make sure change directory to [the top folder "OpenSRP-2.0-FHIR-Server-Docs"](/) first, then execute these commands:
 
    ```bash
    # Create namespacess
    TRAINEE_ACCOUNT=trainee101 && \
-   kubectx gke_${TRAINEE_ACCOUNT}-sid_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
+   PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+   kubectx gke_${PROJECT_ID}_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
    NAMESPACE_NAME=team-based-care-dev && \
    kubectl create namespace $NAMESPACE_NAME && \
    \
@@ -75,13 +78,24 @@ FOLDER_ID=271999659456 && \
 \
 for i in {01..10}; do
   TRAINEE_ACCOUNT=trainee$i && \
-  PROJECT_ID=${TRAINEE_ACCOUNT}-sid-test && \
+  PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
   gcloud projects create ${PROJECT_ID} \
     --folder=${FOLDER_ID} && \
   gcloud billing projects link ${PROJECT_ID} --billing-account ${SID_GCP_BILLING_ACCOUNT_ID} && \
   gcloud projects add-iam-policy-binding ${PROJECT_ID} \
     --member="user:${TRAINEE_ACCOUNT}@sid-indonesia.org" \
     --role='roles/owner'
+done
+```
+
+To cleanup, execute these commands:
+
+```bash
+for i in {01..10}; do
+  TRAINEE_ACCOUNT=trainee$i && \
+  PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+  gcloud billing projects unlink ${PROJECT_ID} && \
+  gcloud projects delete ${PROJECT_ID} --quiet
 done
 ```
 

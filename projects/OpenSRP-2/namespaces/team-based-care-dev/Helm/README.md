@@ -17,7 +17,8 @@ $ helm repo add codecentric https://codecentric.github.io/helm-charts
 
 ```bash
 TRAINEE_ACCOUNT=trainee101 && \
-kubectx gke_${TRAINEE_ACCOUNT}-sid_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
+PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+kubectx gke_${PROJECT_ID}_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
 PROJECT_NAME=OpenSRP-2 && \
 NAMESPACE_NAME=team-based-care-dev && \
 HELM_VALUES_FILE=keycloak.values.yaml && \
@@ -33,7 +34,8 @@ helm install -n "$NAMESPACE_NAME" -f projects/${PROJECT_NAME}/namespaces/${NAMES
 
 ```bash
 TRAINEE_ACCOUNT=trainee101 && \
-kubectx gke_${TRAINEE_ACCOUNT}-sid_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
+PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+kubectx gke_${PROJECT_ID}_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
 PROJECT_NAME=OpenSRP-2 && \
 NAMESPACE_NAME=team-based-care-dev && \
 HELM_VALUES_FILE=keycloak.values.yaml && \

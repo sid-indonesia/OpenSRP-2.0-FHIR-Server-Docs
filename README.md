@@ -47,14 +47,16 @@ Levi preferred to call them "Magic Spells", along with his some years of experie
 
 ```bash
 TRAINEE_ACCOUNT=trainee101 && \
-gcloud container clusters get-credentials ${TRAINEE_ACCOUNT}-autopilot-cluster --region asia-southeast2 --project ${TRAINEE_ACCOUNT}-sid
+PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+gcloud container clusters get-credentials ${TRAINEE_ACCOUNT}-autopilot-cluster --region asia-southeast2 --project ${PROJECT_ID}
 ```
 
 ## Create a namespace
 
 ```bash
 TRAINEE_ACCOUNT=trainee101 && \
-kubectx gke_${TRAINEE_ACCOUNT}-sid_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
+PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+kubectx gke_${PROJECT_ID}_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
 NAMESPACE_NAME=team-based-care-dev && \
 kubectl create namespace $NAMESPACE_NAME && \
 \
@@ -66,7 +68,8 @@ kubectl create namespace $NAMESPACE_NAME
 
 ```bash
 TRAINEE_ACCOUNT=trainee101 && \
-kubectx gke_${TRAINEE_ACCOUNT}-sid_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
+PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+kubectx gke_${PROJECT_ID}_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
 # kubectx minikube && \
 PROJECT_NAME=OpenSRP-2 && \
 NAMESPACE_NAME=** && \
@@ -80,7 +83,9 @@ done
 ## Refresh all manifests in some namespaces (or projects)
 
 ```bash
-kubectx gke_trainee101-sid_asia-southeast2_trainee101-autopilot-cluster && \
+TRAINEE_ACCOUNT=trainee101 && \
+PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+kubectx gke_${PROJECT_ID}_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
 # kubectx minikube && \
 PROJECT_NAME=OpenSRP-2 && \
 NAMESPACE_NAME=team-based-care* && \
@@ -102,7 +107,9 @@ done
 ## Apply all manifests in a namespace
 
 ```bash
-kubectx gke_trainee101-sid_asia-southeast2_trainee101-autopilot-cluster && \
+TRAINEE_ACCOUNT=trainee101 && \
+PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+kubectx gke_${PROJECT_ID}_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
 # kubectx minikube && \
 PROJECT_NAME=OpenSRP-2 && \
 NAMESPACE_NAME=superset && \
@@ -114,7 +121,9 @@ kubectl apply -n "$NAMESPACE_NAME" -f projects/$PROJECT_NAME/namespaces/$NAMESPA
 ## Refresh a k8s manifest `yaml`
 
 ```bash
-kubectx gke_trainee101-sid_asia-southeast2_trainee101-autopilot-cluster && \
+TRAINEE_ACCOUNT=trainee101 && \
+PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+kubectx gke_${PROJECT_ID}_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
 # kubectx minikube && \
 PROJECT_NAME=OpenSRP-2 && \
 NAMESPACE_NAME=team-based-care-dev && \
@@ -137,7 +146,9 @@ kubectl apply -n "$NAMESPACE_NAME" -f ${DIR_PATH}/${MANIFEST_NAME}.yaml
 ## Apply new manifests in a folder all at once
 
 ```bash
-kubectx gke_trainee101-sid_asia-southeast2_trainee101-autopilot-cluster && \
+TRAINEE_ACCOUNT=trainee101 && \
+PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+kubectx gke_${PROJECT_ID}_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
 # kubectx minikube && \
 PROJECT_NAME=OpenSRP-2 && \
 NAMESPACE_NAME=federated-fhir-ecosystem && \
@@ -151,7 +162,9 @@ kubectl apply -n "$NAMESPACE_NAME" -f ${DIR_PATH} -R
 ## Get many manifests and put them into `manifests.yaml` + secret manifests and put them into `secrets.yaml`
 
 ```bash
-kubectx gke_trainee101-sid_asia-southeast2_trainee101-autopilot-cluster && \
+TRAINEE_ACCOUNT=trainee101 && \
+PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+kubectx gke_${PROJECT_ID}_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
 # kubectx minikube && \
 PROJECT_NAME=OpenSRP-2 && \
 NAMESPACE_NAME=federated-fhir-ecosystem && \
@@ -165,7 +178,9 @@ kubectl get secrets -n "${NAMESPACE_NAME}" -o yaml > ${DIR_PATH}/secrets.yaml
 ## Get many manifests and put them into one `yaml`
 
 ```bash
-kubectx gke_trainee101-sid_asia-southeast2_trainee101-autopilot-cluster && \
+TRAINEE_ACCOUNT=trainee101 && \
+PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+kubectx gke_${PROJECT_ID}_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
 # kubectx minikube && \
 kubectl get deployment,sts,cm,hpa,vpa,service,ingress -o yaml > some-manifests.yaml
 ```
@@ -173,7 +188,9 @@ kubectl get deployment,sts,cm,hpa,vpa,service,ingress -o yaml > some-manifests.y
 ## Get all manifests (excluding `Secret`, `ConfigMap`, `Ingress`, `ManagedCertificate`, etc...) and put them into one `yaml`
 
 ```bash
-kubectx gke_trainee101-sid_asia-southeast2_trainee101-autopilot-cluster && \
+TRAINEE_ACCOUNT=trainee101 && \
+PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+kubectx gke_${PROJECT_ID}_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
 # kubectx minikube && \
 kubectl get all -o yaml > all-manifests.yaml
 ```
@@ -181,7 +198,9 @@ kubectl get all -o yaml > all-manifests.yaml
 ## Get secrets and put them into `secrets.yaml`
 
 ```bash
-kubectx gke_trainee101-sid_asia-southeast2_trainee101-autopilot-cluster && \
+TRAINEE_ACCOUNT=trainee101 && \
+PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+kubectx gke_${PROJECT_ID}_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
 # kubectx minikube && \
 kubectl get secrets -o yaml > secrets.yaml
 ```
