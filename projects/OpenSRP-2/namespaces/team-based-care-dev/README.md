@@ -38,7 +38,17 @@
    ```bash
    TRAINEE_ACCOUNT=trainee101 && \
    PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
-   gcloud beta container --project "${PROJECT_ID}" clusters create-auto "${TRAINEE_ACCOUNT}-autopilot-cluster" --region "asia-southeast2" --release-channel "regular" --enable-ip-access --no-enable-google-cloud-access --network "projects/${PROJECT_ID}/global/networks/default" --subnetwork "projects/${PROJECT_ID}/regions/asia-southeast2/subnetworks/default" --cluster-ipv4-cidr "/17" --binauthz-evaluation-mode=DISABLED
+   gcloud beta container \
+    --project "${PROJECT_ID}" \
+    clusters create-auto "${TRAINEE_ACCOUNT}-autopilot-cluster" \
+    --region "asia-southeast2" \
+    --release-channel "regular" \
+    --enable-ip-access \
+    --no-enable-google-cloud-access \
+    --network "projects/${PROJECT_ID}/global/networks/default" \
+    --subnetwork "projects/${PROJECT_ID}/regions/asia-southeast2/subnetworks/default" \
+    --cluster-ipv4-cidr "/17" \
+    --binauthz-evaluation-mode=DISABLED
    ```
 4. Within Cloud Shell, apply all k8s manifests within the project folder [OpenSRP-2](/projects/OpenSRP-2), make sure change directory to [the top folder "OpenSRP-2.0-FHIR-Server-Docs"](/) first, then execute these commands:
 
