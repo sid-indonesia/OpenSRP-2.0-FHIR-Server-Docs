@@ -34,10 +34,8 @@ or if you want to do in local machine:
 # Steps
 
 - Follow the steps within [./projects/OpenSRP-2/namespaces/team-based-care-dev/README.md](./projects/OpenSRP-2/namespaces/team-based-care-dev/README.md#steps)
-- If using DBMS cloud service such as [Google Cloud SQL](https://cloud.google.com/sql/), create database via the cloud console or SQL client, the database name needs to be the same name as the one being referenced in the server applications configurations files.
+- Create database via the cloud console or SQL client, the database name needs to be the same name as the one being referenced in the server applications configurations files.
 - Create DB user(s) for the database, and the least privileges permissions for each user(s). See [sample SQL script for modifying permissions](./permissions.sql).
-- In older versions of HAPI FHIR JPA Server (< [6.6.0](https://hapifhir.io/hapi-fhir/docs/introduction/changelog.html#changes-24)), change data type of `public.hfj_res_ver.res_text_vc` from `varchar(4000)` to `text` in HAPI FHIR database. The [GitHub Issue](https://github.com/hapifhir/hapi-fhir/pull/4763).
-- Restart FHIR Gateway after all other components ready to serve to avoid issue related to `JWT verification failed with error: The Token's Signature resulted invalid when verified using the Algorithm: SHA256withRSA`
 
 # Useful Commands
 

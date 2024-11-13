@@ -35,10 +35,14 @@
        - Grant all privileges to the database `hapi_fhir_team_based_care` for user `admin_team_based_care`.
        - Grant all privileges to the database `keycloak_gke` for user `keycloak_gke`.
 
-4. Create Kubernetes (k8s) autopilot cluster within Google Kubernetes Engine. Can use the following command in Cloud Shell:
+4. Create Kubernetes (k8s) autopilot cluster within Google Kubernetes Engine. Can use the following commands in Cloud Shell:
    ```bash
    TRAINEE_ACCOUNT=trainee101 && \
    PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+   gcloud --project=${PROJECT_ID} \
+    services enable \
+    container.googleapis.com \
+    containerregistry.googleapis.com && \
    gcloud beta container \
     --project "${PROJECT_ID}" \
     clusters create-auto "${TRAINEE_ACCOUNT}-autopilot-cluster" \
@@ -78,6 +82,9 @@
 
 6. Helm add repo keycloak and then helm install keycloak, see [the markdown file within the Helm directory](/projects/OpenSRP-2/namespaces/team-based-care-dev/Helm/README.md).
 7. Wait for all workloads have green check mark which means they are ready to serve. (N.B.: FHIR Gateway workload will depend on Keycloak until Keycloak gets its TLS certificate active)
+8. In older versions of HAPI FHIR JPA Server (< [6.6.0](https://hapifhir.io/hapi-fhir/docs/introduction/changelog.html#changes-24)), change data type of `public.hfj_res_ver.res_text_vc` from `varchar(4000)` to `text` in HAPI FHIR database. The [GitHub Issue](https://github.com/hapifhir/hapi-fhir/pull/4763).
+   1. Connect to the DBMS instance using [DBeaver](https://dbeaver.io/download/) or other SQL client with user `admin_team_based_care` (password was set to `CHANGE_THIS`), then alter the data type of column `public.hfj_res_ver.res_text_vc` within database `hapi_fhir_team_based_care` from data type `varchar(4000)` to `text`.
+9. Restart FHIR Gateway after all other components ready to serve to avoid issue related to `JWT verification failed with error: The Token's Signature resulted invalid when verified using the Algorithm: SHA256withRSA`
 
 ### GCP Project Creation Script
 
