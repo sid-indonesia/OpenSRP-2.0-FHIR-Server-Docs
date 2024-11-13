@@ -91,6 +91,8 @@
 GCP Projects will be provisioned by SID's System Administrator for `trainee01`-`trainee10`. The script used was:
 
 ```bash
+# Need to set environment variables: `SID_GCP_BILLING_ACCOUNT_ID`
+
 # Folder ID for folder "Training Grounds"
 FOLDER_ID=271999659456 && \
 \
