@@ -18,7 +18,7 @@
    2. Choose Edition preset "Sandbox".
    3. Choose Database version "PostgreSQL 15".
    4. Set Instance ID as "postgresql-dev".
-   5. Generate a secure password for the default `postgres` DB user by using the [Password Generator](https://passwordsgenerator.net/) (Password Length: 50, uncheck "Include Symbols", Set "Quantity" as `1`, Click on Generate( V2 ) and then copy and paste it in the password field of Cloud SQL instance creation page.
+   5. Generate a secure password for the default `postgres` DB user by using the [Password Generator](https://passwordsgenerator.net/) (Password Length: 50, uncheck "Include Symbols", Set "Quantity" as `1`, Click on `Generate( V2 )` button and then copy and paste it in the password field of Cloud SQL instance creation page.
    6. Select Region "asia-southeast2 (Jakarta)".
    7. For testing, select "Single zone" as the Zonal availability. For production workloads, it is recommended to use "Multiple zones (Highly available)".
    8. Change machine configuration to 1 vCPU and 3.75 GB memory for testing/sandbox.
@@ -31,7 +31,7 @@
    15. While waiting for the instance to be created, try to accomplish other steps that can be done in parallel.
    16. After the instance created, create database `hapi_fhir_team_based_care` and `keycloak_gke`, can be done via console.
    17. In [`Endpoints\postgresql-dev.yaml`](../ancillary-services/KubernetesManifests/v1/Endpoints/postgresql-dev.yaml) Change `CHANGE_THIS_TO_CLOUD_SQL_PRIVATE_IP` to the correct value (Private IP Address of the newly-created Cloud SQL instance) after creating a Cloud SQL instance.
-   18. Connect to the DBMS instance using [DBeaver](https://dbeaver.io/download/) or other SQL client, then create user `admin_team_based_care` and `keycloak_gke` by using the SQL script provided in [here](/permissions.sql), do not forget to connect the correct DB first.
+   18. Connect to the DBMS instance using [DBeaver](https://dbeaver.io/download/) or other SQL client, then create user `admin_team_based_care` and `keycloak_gke` with password set as `CHANGE_THIS` to match with the ones stored in the k8s Secret manifests, use the SQL script provided in [here](/permissions.sql), do not forget to connect the correct DB first.
        - Grant all privileges to the database `hapi_fhir_team_based_care` for user `admin_team_based_care`.
        - Grant all privileges to the database `keycloak_gke` for user `keycloak_gke`.
 
@@ -190,26 +190,23 @@ for i in {01..10}; do
   TRAINEE_ACCOUNT=trainee$i && \
   PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
 
-  # Get the list of static IP addresses and their names
-  IP_ADDRESSES=$(gcloud compute addresses list --project=${PROJECT_ID} --format="value(NAME, ADDRESS)" | grep -e "-dev")
-
   # Prepare the JSON structure for the DNS records
   DNS_RECORDS=""
 
-  # Loop through each IP address and format it into the JSON structure
-  while IFS= read -r line; do
-    NAME=$(echo "$line" | awk '{print $1}' | sed 's/-dev/\.dev/' | sed 's/fhir-server-auth/fhir-server/')
-    NAME="${TRAINEE_ACCOUNT}.${NAME}"
-    IP=$(echo "$line" | awk '{print $2}')
+  # Loop through each hostNames and format it into the JSON structure
+  for hostName in \
+    $TRAINEE_ACCOUNT.fhir-gateway.dev.sid-indonesia.org \
+    $TRAINEE_ACCOUNT.fhir-server.dev.sid-indonesia.org \
+    $TRAINEE_ACCOUNT.fhir-web.dev.sid-indonesia.org \
+    $TRAINEE_ACCOUNT.sso.dev.sid-indonesia.org; do
 
     # Append to DNS_RECORDS
     DNS_RECORDS+="{
-        \"values\": [\"$IP\"],
-        \"ttl\": 3600,
-        \"hostName\": \"$NAME.$DOMAIN_NAME\",
+        \"values\": [\"0.0.0.0\"],
+        \"hostName\": \"$hostName\",
         \"type\": \"A\"
     },"
-  done <<< "$IP_ADDRESSES"
+  done
 
   # Remove the trailing comma from the last record
   DNS_RECORDS=${DNS_RECORDS%,}
