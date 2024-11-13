@@ -65,6 +65,26 @@
 5. Helm add repo keycloak and then helm install keycloak, see [the markdown file within the Helm directory](/projects/OpenSRP-2/namespaces/team-based-care-dev/Helm/README.md).
 6. Wait for all workloads have green check mark which means they are ready to serve. (N.B.: FHIR Gateway workload will depend on Keycloak until Keycloak gets its TLS certificate active)
 
+### GCP Project Creation Script
+
+GCP Projects will be provisioned by SID's System Administrator for `trainee01`-`trainee10`. The script used was:
+
+```bash
+# Folder ID for folder "Training Grounds"
+FOLDER_ID=271999659456 && \
+\
+for i in {01..10}; do
+  TRAINEE_ACCOUNT=trainee$i && \
+  PROJECT_ID=${TRAINEE_ACCOUNT}-sid-test && \
+  gcloud projects create ${PROJECT_ID} \
+    --folder=${FOLDER_ID} && \
+  gcloud billing projects link ${PROJECT_ID} --billing-account ${SID_GCP_BILLING_ACCOUNT_ID} && \
+  gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+    --member="user:${TRAINEE_ACCOUNT}@sid-indonesia.org" \
+    --role='roles/owner'
+done
+```
+
 ### Static External IP Addresses
 
 Static External IP Addresses will be provisioned by SID's System Administrator for `trainee01`-`trainee10` along with their respective DNS A Records. Commands executed to reserve static global external IP addresses and create DNS records for them were:
@@ -141,7 +161,7 @@ DOMAIN_NAME="sid-indonesia.org" && \
 # gcloud config set account ${SID_SUPER_ADMIN_GOOGLE_ACCOUNT} && \
 # gcloud auth login && \
 \
-for i in {103..103}; do
+for i in {01..10}; do
   TRAINEE_ACCOUNT=trainee$i && \
   PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
 
