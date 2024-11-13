@@ -67,15 +67,130 @@
 
 ### Static External IP Addresses
 
-Static External IP Addresses will be provisioned by SID's System Administrator for `trainee01`-`trainee10` along with their respective DNS A Records. Commands executed to reserve static global external IP addresses were:
+Static External IP Addresses will be provisioned by SID's System Administrator for `trainee01`-`trainee10` along with their respective DNS A Records. Commands executed to reserve static global external IP addresses and create DNS records for them were:
 
 ```bash
-TRAINEE_ACCOUNT=trainee101 && \
-gcloud config set account ${TRAINEE_ACCOUNT}@sid-indonesia.org && \
-gcloud auth login && \
-gcloud config set project ${TRAINEE_ACCOUNT}-sid && \
-gcloud compute addresses create fhir-server-auth-dev --project=${TRAINEE_ACCOUNT}-sid --global && \
-gcloud compute addresses create fhir-gateway-dev --project=${TRAINEE_ACCOUNT}-sid --global && \
-gcloud compute addresses create fhir-web-dev --project=${TRAINEE_ACCOUNT}-sid --global && \
-gcloud compute addresses create sso-dev --project=${TRAINEE_ACCOUNT}-sid --global
+# Need to set environment variables: `SID_SUPER_ADMIN_GOOGLE_ACCOUNT`, `WIX_ACCOUNT_ID`, `WIX_API_KEY_TO_MANAGE_DOMAINS`
+
+# Set your domain name
+DOMAIN_NAME="sid-indonesia.org" && \
+\
+# gcloud config set account ${SID_SUPER_ADMIN_GOOGLE_ACCOUNT} && \
+# gcloud auth login && \
+\
+for i in {01..10}; do
+  TRAINEE_ACCOUNT=trainee$i && \
+  PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+  gcloud services enable compute.googleapis.com --project=${PROJECT_ID} && \
+  gcloud compute addresses create \
+    fhir-server-auth-dev \
+    fhir-gateway-dev \
+    fhir-web-dev \
+    sso-dev \
+    --project=${PROJECT_ID} \
+    --global
+
+  # Get the list of static IP addresses and their names
+  IP_ADDRESSES=$(gcloud compute addresses list --project=${PROJECT_ID} --format="value(NAME, ADDRESS)" | grep -e "-dev")
+
+  # Prepare the JSON structure for the DNS records
+  DNS_RECORDS=""
+
+  # Loop through each IP address and format it into the JSON structure
+  while IFS= read -r line; do
+    NAME=$(echo "$line" | awk '{print $1}' | sed 's/-dev/\.dev/' | sed 's/fhir-server-auth/fhir-server/')
+    NAME="${TRAINEE_ACCOUNT}.${NAME}"
+    IP=$(echo "$line" | awk '{print $2}')
+
+    # Append to DNS_RECORDS
+    DNS_RECORDS+="{
+        \"values\": [\"$IP\"],
+        \"ttl\": 3600,
+        \"hostName\": \"$NAME.$DOMAIN_NAME\",
+        \"type\": \"A\"
+    },"
+  done <<< "$IP_ADDRESSES"
+
+  # Remove the trailing comma from the last record
+  DNS_RECORDS=${DNS_RECORDS%,}
+
+  # Create the final JSON payload
+  JSON_PAYLOAD="{
+    \"domainName\": \"$DOMAIN_NAME\",
+    \"additions\": [
+        $DNS_RECORDS
+    ]
+  }"
+
+  # Make the cURL request to the Wix API
+  curl -X PATCH "https://www.wixapis.com/domains/v1/dns-zones/${DOMAIN_NAME}" \
+  -H "wix-account-id: $WIX_ACCOUNT_ID" \
+  -H "Authorization: $WIX_API_KEY_TO_MANAGE_DOMAINS" \
+  -d "$JSON_PAYLOAD"
+done
+```
+
+To cleanup, execute these:
+
+```bash
+# Need to set environment variables: `SID_SUPER_ADMIN_GOOGLE_ACCOUNT`, `WIX_ACCOUNT_ID`, `WIX_API_KEY_TO_MANAGE_DOMAINS`
+
+# Set your domain name
+DOMAIN_NAME="sid-indonesia.org" && \
+\
+# gcloud config set account ${SID_SUPER_ADMIN_GOOGLE_ACCOUNT} && \
+# gcloud auth login && \
+\
+for i in {103..103}; do
+  TRAINEE_ACCOUNT=trainee$i && \
+  PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+
+  # Get the list of static IP addresses and their names
+  IP_ADDRESSES=$(gcloud compute addresses list --project=${PROJECT_ID} --format="value(NAME, ADDRESS)" | grep -e "-dev")
+
+  # Prepare the JSON structure for the DNS records
+  DNS_RECORDS=""
+
+  # Loop through each IP address and format it into the JSON structure
+  while IFS= read -r line; do
+    NAME=$(echo "$line" | awk '{print $1}' | sed 's/-dev/\.dev/' | sed 's/fhir-server-auth/fhir-server/')
+    NAME="${TRAINEE_ACCOUNT}.${NAME}"
+    IP=$(echo "$line" | awk '{print $2}')
+
+    # Append to DNS_RECORDS
+    DNS_RECORDS+="{
+        \"values\": [\"$IP\"],
+        \"ttl\": 3600,
+        \"hostName\": \"$NAME.$DOMAIN_NAME\",
+        \"type\": \"A\"
+    },"
+  done <<< "$IP_ADDRESSES"
+
+  # Remove the trailing comma from the last record
+  DNS_RECORDS=${DNS_RECORDS%,}
+
+  # Create the final JSON payload
+  JSON_PAYLOAD="{
+    \"domainName\": \"$DOMAIN_NAME\",
+    \"deletions\": [
+        $DNS_RECORDS
+    ]
+  }"
+
+  # Make the cURL request to the Wix API
+  curl -X PATCH "https://www.wixapis.com/domains/v1/dns-zones/${DOMAIN_NAME}" \
+  -H "wix-account-id: $WIX_ACCOUNT_ID" \
+  -H "Authorization: $WIX_API_KEY_TO_MANAGE_DOMAINS" \
+  -d "$JSON_PAYLOAD"
+
+  echo "";
+
+  gcloud compute addresses delete \
+    fhir-server-auth-dev \
+    fhir-gateway-dev \
+    fhir-web-dev \
+    sso-dev \
+    --project=${PROJECT_ID} \
+    --global --quiet
+done
 ```
