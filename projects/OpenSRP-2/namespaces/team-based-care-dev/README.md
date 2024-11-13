@@ -10,8 +10,9 @@
 
 # Steps
 
-1. Replace all text value `trainee101` within all files (use [Global Search](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files)) with your assigned trainee account number (e.g. `trainee03`).
-2. In Google Cloud SQL, create instance of type "PostgreSQL 15" with the name "postgresql-dev" via console with configurations as instructed in the [tutorial video](https://drive.google.com/file/d/114Ns61fyElFy9EFtmdvZmaRTBXTeFlRH/view?usp=drive_link).
+1. Open [Cloud Shell Editor](https://ide.cloud.google.com), clone [this repository](https://github.com/sid-indonesia/OpenSRP-2.0-FHIR-Server-Docs), open the cloned repository .
+2. Replace all text value `trainee101` within all files (use [Global Search](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files)) with your assigned trainee account number (e.g. `trainee03`).
+3. In Google Cloud SQL, create instance of type "PostgreSQL 15" with the name "postgresql-dev" via console with configurations as instructed in the [tutorial video](https://drive.google.com/file/d/114Ns61fyElFy9EFtmdvZmaRTBXTeFlRH/view?usp=drive_link).
 
    1. Choose Cloud SQL Edition "Enterprise".
    2. Choose Edition preset "Sandbox".
@@ -34,7 +35,7 @@
        - Grant all privileges to the database `hapi_fhir_team_based_care` for user `admin_team_based_care`.
        - Grant all privileges to the database `keycloak_gke` for user `keycloak_gke`.
 
-3. Create Kubernetes (k8s) autopilot cluster within Google Kubernetes Engine. Can use the following command in Cloud Shell:
+4. Create Kubernetes (k8s) autopilot cluster within Google Kubernetes Engine. Can use the following command in Cloud Shell:
    ```bash
    TRAINEE_ACCOUNT=trainee101 && \
    PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
@@ -50,7 +51,7 @@
     --cluster-ipv4-cidr "/17" \
     --binauthz-evaluation-mode=DISABLED
    ```
-4. Within Cloud Shell, apply all k8s manifests within the project folder [OpenSRP-2](/projects/OpenSRP-2), make sure change directory to [the top folder "OpenSRP-2.0-FHIR-Server-Docs"](/) first, then execute these commands:
+5. After the Cloud SQL and k8s cluster provisioned and prepared, within [Cloud Shell Editor](https://ide.cloud.google.com), apply all k8s manifests within the project folder [OpenSRP-2](/projects/OpenSRP-2), make sure change directory to [the top folder "OpenSRP-2.0-FHIR-Server-Docs"](/) first, then execute these commands:
 
    ```bash
    # Create namespacess
@@ -75,8 +76,8 @@
    done
    ```
 
-5. Helm add repo keycloak and then helm install keycloak, see [the markdown file within the Helm directory](/projects/OpenSRP-2/namespaces/team-based-care-dev/Helm/README.md).
-6. Wait for all workloads have green check mark which means they are ready to serve. (N.B.: FHIR Gateway workload will depend on Keycloak until Keycloak gets its TLS certificate active)
+6. Helm add repo keycloak and then helm install keycloak, see [the markdown file within the Helm directory](/projects/OpenSRP-2/namespaces/team-based-care-dev/Helm/README.md).
+7. Wait for all workloads have green check mark which means they are ready to serve. (N.B.: FHIR Gateway workload will depend on Keycloak until Keycloak gets its TLS certificate active)
 
 ### GCP Project Creation Script
 
