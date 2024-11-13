@@ -85,7 +85,7 @@ for i in {01..10}; do
 done
 ```
 
-### Static External IP Addresses
+### Static External IP Addresses and DNS A Records
 
 Static External IP Addresses will be provisioned by SID's System Administrator for `trainee01`-`trainee10` along with their respective DNS A Records. Commands executed to reserve static global external IP addresses and create DNS records for them were:
 
