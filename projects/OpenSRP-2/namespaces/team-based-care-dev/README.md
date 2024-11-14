@@ -10,8 +10,11 @@
 
 # Steps
 
-1. Open [Cloud Shell Editor](https://ide.cloud.google.com), click on `Clone Repository` button and clone [this repository](https://github.com/sid-indonesia/OpenSRP-2.0-FHIR-Server-Docs) https://github.com/sid-indonesia/OpenSRP-2.0-FHIR-Server-Docs, open the cloned repository by clicking on "Open" button on the pop-up dialog after the cloning process is finished.
-2. Replace all text value `trainee101` within all files (use [Global Search](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files)) with your assigned trainee account number (e.g. `trainee03`).
+1. Open [Cloud Shell Editor](https://ide.cloud.google.com).
+   1. Switch user Google Account to your assigned trainee Google Account (e.g. trainee03@sid-indonesia.org)
+   2. Click on `Clone Repository` button and clone [this repository:](https://github.com/sid-indonesia/OpenSRP-2.0-FHIR-Server-Docs) https://github.com/sid-indonesia/OpenSRP-2.0-FHIR-Server-Docs
+   3. Open the cloned repository by clicking on `Open` button on the pop-up dialog after the cloning process is finished.
+2. Replace all text value `trainee101` within all files (use [Global Search](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files) [`CTRL/CMD⌘ + SHIFT + F`]) with your assigned trainee account number (e.g. `trainee03`).
 3. In Google Cloud SQL, create instance of type "PostgreSQL 15" with the name "postgresql-dev" via console with configurations as instructed in the [tutorial video](https://drive.google.com/file/d/114Ns61fyElFy9EFtmdvZmaRTBXTeFlRH/view?usp=drive_link).
 
    1. Choose Cloud SQL Edition "Enterprise".
@@ -27,7 +30,7 @@
    11. Tick "Enable private path".
    12. Add database flags `max_connections` with value `300`, and `cloudsql.logical_decoding` with value `on`.
    13. Leave all other settings to their default value.
-   14. Click on "CREATE INSTANCE" button.
+   14. Click on `CREATE INSTANCE` button.
    15. While waiting for the instance to be created, try to accomplish other steps that can be done in parallel.
    16. After the instance created, create database `hapi_fhir_team_based_care` and `keycloak_gke`, can be done via console.
    17. In [`Endpoints\postgresql-dev.yaml`](../ancillary-services/KubernetesManifests/v1/Endpoints/postgresql-dev.yaml) Change `CHANGE_THIS_TO_CLOUD_SQL_PRIVATE_IP` to the correct value (Private IP Address of the newly-created Cloud SQL instance) after creating a Cloud SQL instance.
@@ -35,7 +38,7 @@
        - Grant all privileges to the database `hapi_fhir_team_based_care` for user `admin_team_based_care`.
        - Grant all privileges to the database `keycloak_gke` for user `keycloak_gke`.
 
-4. Create Kubernetes (k8s) autopilot cluster within Google Kubernetes Engine. Can use the following commands in Cloud Shell:
+4. Create Kubernetes (k8s) autopilot cluster within Google Kubernetes Engine. Can use the following commands in Cloud Shell / Integrated terminal within the Cloud Shell Editor (press `` CTRL/CMD⌘ + ` `` ):
    ```bash
    TRAINEE_ACCOUNT=trainee101 && \
    PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
@@ -82,8 +85,9 @@
 
 6. Helm add repo keycloak and then helm install keycloak, see [the markdown file within the Helm directory](/projects/OpenSRP-2/namespaces/team-based-care-dev/Helm/README.md).
 7. Wait for all workloads have green check mark which means they are ready to serve. (N.B.: FHIR Gateway workload will depend on Keycloak until Keycloak gets its TLS certificate active)
-8. In older versions of HAPI FHIR JPA Server (< [6.6.0](https://hapifhir.io/hapi-fhir/docs/introduction/changelog.html#changes-24)), change data type of `public.hfj_res_ver.res_text_vc` from `varchar(4000)` to `text` in HAPI FHIR database. The [GitHub Issue](https://github.com/hapifhir/hapi-fhir/pull/4763).
+8. In older versions of HAPI FHIR JPA Server (< [`6.6.0`](https://hapifhir.io/hapi-fhir/docs/introduction/changelog.html#changes-24)), change data type of `public.hfj_res_ver.res_text_vc` from `varchar(4000)` to `text` in HAPI FHIR database. The [GitHub Issue](https://github.com/hapifhir/hapi-fhir/pull/4763).
    1. Connect to the DBMS instance using [DBeaver](https://dbeaver.io/download/) or other SQL client with user `admin_team_based_care` (password was set to `CHANGE_THIS`), then alter the data type of column `public.hfj_res_ver.res_text_vc` within database `hapi_fhir_team_based_care` from data type `varchar(4000)` to `text`.
+      - Note: One of the permanent resolutions to this is to upgrade the version of HAPI FHIR within the OpenSRP community into the latest version or version `6.6.0` or greater and publish the built docker image to docker hub or other docker image repository of your choosing. There is actually a PR about upgrading to version `6.10.0` of OpenSRP's HAPI FHIR JPA Server Starter in [here](https://github.com/opensrp/hapi-fhir-jpaserver-starter/pull/68).
 9. Restart FHIR Gateway after all other components ready to serve to avoid issue related to `JWT verification failed with error: The Token's Signature resulted invalid when verified using the Algorithm: SHA256withRSA`
 
 ### GCP Project Creation Script
