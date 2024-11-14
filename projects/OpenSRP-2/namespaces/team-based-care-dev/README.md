@@ -238,14 +238,15 @@ for i in {01..10}; do
   -H "Authorization: $WIX_API_KEY_TO_MANAGE_DOMAINS" \
   -d "$JSON_PAYLOAD"
 
-  echo "";
-
-  gcloud compute addresses delete \
+  printf "\n\nOptionally, if the project has not been unlinked to the billing account and the project not deleted, run the following command:\n"
+  echo gcloud compute addresses delete \
     fhir-server-auth-dev \
     fhir-gateway-dev \
     fhir-web-dev \
     sso-dev \
     --project=${PROJECT_ID} \
     --global --quiet
+
+  printf "\n"
 done
 ```
