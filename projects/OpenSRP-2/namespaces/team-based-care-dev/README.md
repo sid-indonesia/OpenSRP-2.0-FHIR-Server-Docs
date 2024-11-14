@@ -89,6 +89,7 @@
    1. Connect to the DBMS instance using [DBeaver](https://dbeaver.io/download/) or other SQL client with user `admin_team_based_care` (password was set to `CHANGE_THIS`), then alter the data type of column `public.hfj_res_ver.res_text_vc` within database `hapi_fhir_team_based_care` from data type `varchar(4000)` to `text`.
       - Note: One of the permanent resolutions to this is to upgrade the version of HAPI FHIR within the OpenSRP community into the latest version or version `6.6.0` or greater and publish the built docker image to docker hub or other docker image repository of your choosing. There is actually a PR about upgrading to version `6.10.0` of OpenSRP's HAPI FHIR JPA Server Starter in [here](https://github.com/opensrp/hapi-fhir-jpaserver-starter/pull/68).
 9. Restart FHIR Gateway after all other components ready to serve to avoid issue related to `JWT verification failed with error: The Token's Signature resulted invalid when verified using the Algorithm: SHA256withRSA`
+   1. One of the ways to restart it is: Go to [GKE Workloads page](https://console.cloud.google.com/kubernetes/workload/overview), find the Deployment for `fhir-gateway`, go to the detailed page of the Deployment, scale the replica from `1` to `0`, and then scale the replica again from `0` to `1`.
 
 ### GCP Project Creation Script
 
