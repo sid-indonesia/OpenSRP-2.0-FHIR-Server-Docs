@@ -101,7 +101,7 @@ GCP Projects will be provisioned by SID's System Administrator for `trainee01`-`
 # Folder ID for folder "Training Grounds"
 FOLDER_ID=271999659456 && \
 \
-for i in {01..10}; do
+for i in {01..15}; do
   TRAINEE_ACCOUNT=trainee$i && \
   PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
   gcloud projects create ${PROJECT_ID} \
@@ -116,7 +116,7 @@ done
 To cleanup, execute these commands:
 
 ```bash
-for i in {01..10}; do
+for i in {01..15}; do
   TRAINEE_ACCOUNT=trainee$i && \
   PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
   gcloud billing projects unlink ${PROJECT_ID} && \
@@ -137,7 +137,7 @@ DOMAIN_NAME="sid-indonesia.org" && \
 # gcloud config set account ${SID_SUPER_ADMIN_GOOGLE_ACCOUNT} && \
 # gcloud auth login && \
 \
-for i in {01..10}; do
+for i in {01..15}; do
   TRAINEE_ACCOUNT=trainee$i && \
   PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
   gcloud services enable compute.googleapis.com --project=${PROJECT_ID} && \
@@ -200,7 +200,7 @@ DOMAIN_NAME="sid-indonesia.org" && \
 # gcloud config set account ${SID_SUPER_ADMIN_GOOGLE_ACCOUNT} && \
 # gcloud auth login && \
 \
-for i in {01..10}; do
+for i in {01..15}; do
   TRAINEE_ACCOUNT=trainee$i && \
   PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
 
