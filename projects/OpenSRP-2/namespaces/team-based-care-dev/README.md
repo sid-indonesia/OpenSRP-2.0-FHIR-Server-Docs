@@ -255,7 +255,7 @@ done
 ### Saving costs by stopping workloads
 
 ```bash
-for i in {14..14} 106; do
+for i in {02..11} {13..15} 106; do
   REPLICA_COUNT=1 && \
   TRAINEE_ACCOUNT=trainee$i && \
   PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
