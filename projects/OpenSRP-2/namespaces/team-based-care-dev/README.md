@@ -251,3 +251,26 @@ for i in {01..15}; do
   printf "\n"
 done
 ```
+
+### Saving costs by stopping workloads
+
+```bash
+for i in {14..14} 106; do
+  REPLICA_COUNT=1 && \
+  TRAINEE_ACCOUNT=trainee$i && \
+  PROJECT_ID=${TRAINEE_ACCOUNT}-sid && \
+  gcloud container clusters \
+    get-credentials \
+    ${TRAINEE_ACCOUNT}-autopilot-cluster \
+    --region asia-southeast2 \
+    --project ${PROJECT_ID} && \
+  kubectx gke_${PROJECT_ID}_asia-southeast2_${TRAINEE_ACCOUNT}-autopilot-cluster && \
+  kubectl scale --replicas=${REPLICA_COUNT} \
+    statefulset/keycloak-keycloakx \
+    deployment/fhir-web \
+    deployment/fhir-server-auth \
+    deployment/fhir-web \
+    deployment/fhir-gateway \
+    -n team-based-care-dev
+done
+```
